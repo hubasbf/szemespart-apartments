@@ -77,6 +77,22 @@
       padding: 24px 48px;
       transition: background 0.4s, padding 0.4s, border-color 0.4s;
     }
+    nav::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 -34px;
+      z-index: -1;
+      background: linear-gradient(
+        to bottom,
+        rgba(19,18,15,0.42) 0%,
+        rgba(19,18,15,0.22) 58%,
+        rgba(19,18,15,0) 100%
+      );
+      opacity: 1;
+      transition: opacity 0.35s;
+      pointer-events: none;
+    }
+    nav.scrolled::before { opacity: 0; }
     nav.scrolled {
       background: rgba(246,242,234,0.96);
       backdrop-filter: blur(10px);
@@ -95,8 +111,9 @@
       color: #fff;
       text-decoration: none;
       transition: color 0.4s;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.35);
     }
-    nav.scrolled .nav-logo { color: var(--text); }
+    nav.scrolled .nav-logo { color: var(--text); text-shadow: none; }
 
     .nav-right {
       display: flex;
@@ -112,11 +129,12 @@
       font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.8);
+      color: rgba(255,255,255,0.92);
       text-decoration: none;
       transition: color 0.3s;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.42);
     }
-    nav.scrolled .nav-links a { color: var(--text-mid); }
+    nav.scrolled .nav-links a { color: var(--text-mid); text-shadow: none; }
     .nav-links a:hover { color: var(--teal) !important; }
     .nav-links a.nav-cta {
       border-bottom: 1px solid currentColor;
@@ -170,12 +188,13 @@
       font-size: 11px;
       font-weight: 400;
       letter-spacing: 0.1em;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.68);
       padding: 3px 5px;
       border-radius: 2px;
       transition: color 0.25s, background 0.25s;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.42);
     }
-    nav.scrolled .lang-btn { color: var(--text-mid); }
+    nav.scrolled .lang-btn { color: var(--text-mid); text-shadow: none; }
     .lang-btn.active {
       color: #fff;
       font-weight: 500;
@@ -196,15 +215,16 @@
       background: none;
       border: none;
       cursor: pointer;
-      color: rgba(255,255,255,0.55);
+      color: rgba(255,255,255,0.78);
       font-size: 15px;
       line-height: 1;
       padding: 3px 4px;
       transition: color 0.25s, transform 0.3s;
       display: flex;
       align-items: center;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.42);
     }
-    nav.scrolled .theme-btn { color: var(--text-mid); }
+    nav.scrolled .theme-btn { color: var(--text-mid); text-shadow: none; }
     .theme-btn:hover { color: rgba(255,255,255,0.9) !important; transform: rotate(12deg); }
     nav.scrolled .theme-btn:hover { color: var(--teal) !important; }
 
@@ -1771,7 +1791,7 @@
             <div class="calendar-days">
               <span class="day muted"></span><span class="day muted"></span><span class="day muted"></span><span class="day muted"></span><span class="day reserved reserved-start">1</span><span class="day reserved">2</span><span class="day reserved reserved-end">3</span>
               <span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span>
-              <span class="day">11</span><span class="day">12</span><span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span>
+              <span class="day">11</span><span class="day">12</span><span class="day">13</span><span class="day">14</span><span class="day booked booked-start">15</span><span class="day booked">16</span><span class="day booked booked-end">17</span>
               <span class="day">18</span><span class="day">19</span><span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span>
               <span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span><span class="day">31</span>
             </div>
@@ -1796,7 +1816,7 @@
               <span class="day muted"></span><span class="day muted"></span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span>
               <span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day">12</span>
               <span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span>
-              <span class="day">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span>
+              <span class="day booked booked-start">20</span><span class="day booked">21</span><span class="day booked">22</span><span class="day booked">23</span><span class="day booked">24</span><span class="day booked">25</span><span class="day booked booked-end">26</span>
               <span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span><span class="day">31</span><span class="day muted"></span><span class="day muted"></span>
             </div>
           </div>
