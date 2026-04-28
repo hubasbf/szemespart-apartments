@@ -702,24 +702,6 @@
       position: relative;
       overflow: visible;
     }
-    .availability-shell::before,
-    .availability-shell::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 56px;
-      z-index: 1;
-      pointer-events: none;
-    }
-    .availability-shell::before {
-      left: 0;
-      background: linear-gradient(90deg, var(--bg) 0%, transparent 100%);
-    }
-    .availability-shell::after {
-      right: 0;
-      background: linear-gradient(270deg, var(--bg) 0%, transparent 100%);
-    }
     .availability-header {
       display: flex;
       align-items: center;
@@ -731,12 +713,6 @@
       color: var(--text);
       font-size: 12px;
       letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-    .availability-hint {
-      color: var(--text-mid);
-      font-size: 11px;
-      letter-spacing: 0.1em;
       text-transform: uppercase;
     }
     .availability-nav {
@@ -796,20 +772,30 @@
       color: var(--text);
       margin-bottom: 18px;
     }
-    .calendar-weekdays,
     .calendar-days {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 6px;
     }
     .calendar-weekdays {
+      display: block;
       color: var(--text-mid);
       font-size: 9px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       margin-bottom: 10px;
     }
-    .calendar-weekdays span {
+    .calendar-weekdays > span {
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+    body.lang-en .calendar-weekdays > .en,
+    body.lang-hu .calendar-weekdays > .hu,
+    body.lang-ro .calendar-weekdays > .ro,
+    body.lang-de .calendar-weekdays > .de {
+      display: grid;
+    }
+    .calendar-weekdays > span > span {
       text-align: center;
     }
     .day {
@@ -1834,33 +1820,33 @@
       <div class="nearby-grid fade-in">
         <div class="nearby-item">
           <span class="nearby-meta"><span class="en">Beach</span><span class="hu">Strand</span><span class="ro">Plajă</span><span class="de">Strand</span></span>
-          <strong><span class="en">Balatonszemes free beach</span><span class="hu">Balatonszemesi szabadstrand</span><span class="ro">Plaja liberă Balatonszemes</span><span class="de">Balatonszemes Freistrand</span></strong>
-          <span><span class="en">Grass, shade, sandy lake bed, and shallow water close behind the complex.</span><span class="hu">Fű, árnyék, homokos meder és sekély víz közvetlenül a komplexum mögött.</span><span class="ro">Iarbă, umbră, fund nisipos și apă mică aproape în spatele complexului.</span><span class="de">Wiese, Schatten, Sandgrund und flaches Wasser direkt hinter dem Komplex.</span></span>
+          <strong><span class="en">510 m of free beach</span><span class="hu">510 m-es szabadstrand</span><span class="ro">510 m de plajă liberă</span><span class="de">510 m Freistrand</span></strong>
+          <span><span class="en">Shallow sandy water, green shade, playgrounds, and sports courts close behind the complex.</span><span class="hu">Sekély, homokos víz, árnyas zöld part, játszóterek és sportpályák közvetlenül a komplexum mögött.</span><span class="ro">Apă mică cu fund nisipos, umbră verde, locuri de joacă și terenuri de sport aproape în spatele complexului.</span><span class="de">Flaches Wasser mit Sandgrund, grüne Schattenplätze, Spielplätze und Sportflächen direkt hinter dem Komplex.</span></span>
         </div>
         <div class="nearby-item">
-          <span class="nearby-meta"><span class="en">Food</span><span class="hu">Ételek</span><span class="ro">Mâncare</span><span class="de">Essen</span></span>
-          <strong><span class="en">Kistücsök and local restaurants</span><span class="hu">Kistücsök és helyi éttermek</span><span class="ro">Kistücsök și restaurante locale</span><span class="de">Kistücsök und lokale Restaurants</span></strong>
-          <span><span class="en">A strong food scene nearby, from celebrated dining to simple summer meals.</span><span class="hu">Erős gasztronómiai környezet, ismert étteremtől egyszerű nyári vacsorákig.</span><span class="ro">O zonă bună pentru mâncare, de la restaurante cunoscute la mese simple de vară.</span><span class="de">Eine gute Essensszene in der Nähe, von bekannter Küche bis zu einfachen Sommeressen.</span></span>
+          <span class="nearby-meta"><span class="en">Boats</span><span class="hu">Hajók</span><span class="ro">Bărci</span><span class="de">Boote</span></span>
+          <strong><span class="en">Cruises from the harbour</span><span class="hu">Hajózás a kikötőből</span><span class="ro">Croaziere din port</span><span class="de">Ausflüge vom Hafen</span></strong>
+          <span><span class="en">Walk to the marina for harbour views, sightseeing cruises, and seasonal boats across the lake.</span><span class="hu">Sétálj le a marinához kikötői hangulatért, sétahajózásért és szezonális balatoni járatokért.</span><span class="ro">Mergi pe jos până la marină pentru priveliști de port, croaziere și curse sezoniere pe lac.</span><span class="de">Zu Fuß zur Marina für Hafenblicke, Ausflugsschiffe und saisonale Verbindungen über den See.</span></span>
         </div>
         <div class="nearby-item">
-          <span class="nearby-meta"><span class="en">Groceries</span><span class="hu">Bevásárlás</span><span class="ro">Cumpărături</span><span class="de">Einkaufen</span></span>
-          <strong><span class="en">Small shops for good provisions</span><span class="hu">Kis boltok jó alapanyagokhoz</span><span class="ro">Magazine mici pentru provizii bune</span><span class="de">Kleine Läden für gute Vorräte</span></strong>
-          <span><span class="en">Easy everyday groceries for breakfast, terrace dinners, and lake-day snacks.</span><span class="hu">Könnyű napi bevásárlás reggelihez, teraszos vacsorához és strandnapi falatokhoz.</span><span class="ro">Cumpărături simple pentru mic dejun, cine pe terasă și gustări pentru plajă.</span><span class="de">Einfache Einkäufe für Frühstück, Terrassenabende und Snacks für den Strandtag.</span></span>
+          <span class="nearby-meta"><span class="en">Wine day</span><span class="hu">Boros kirándulás</span><span class="ro">Zi de vin</span><span class="de">Weintag</span></span>
+          <strong><span class="en">Fonyód to Badacsony</span><span class="hu">Fonyódtól Badacsonyig</span><span class="ro">Din Fonyód spre Badacsony</span><span class="de">Von Fonyód nach Badacsony</span></strong>
+          <span><span class="en">A short train ride to Fonyód, then a seasonal boat across to the Badacsony wine hills.</span><span class="hu">Rövid vonatút Fonyódig, onnan szezonban hajóval át a badacsonyi borhegyekhez.</span><span class="ro">Un drum scurt cu trenul până la Fonyód, apoi barcă sezonieră spre dealurile viticole Badacsony.</span><span class="de">Kurz mit dem Zug nach Fonyód, dann saisonal per Schiff zu den Badacsonyer Weinhügeln.</span></span>
         </div>
         <div class="nearby-item">
-          <span class="nearby-meta"><span class="en">Arrive</span><span class="hu">Érkezés</span><span class="ro">Sosire</span><span class="de">Anreise</span></span>
-          <strong><span class="en">Train and M7 access</span><span class="hu">Vonat és M7</span><span class="ro">Tren și acces M7</span><span class="de">Bahn und M7</span></strong>
-          <span><span class="en">Direct train connections and an easy drive from Budapest keep arrival simple.</span><span class="hu">Közvetlen vonatok és egyszerű autós út Budapest felől.</span><span class="ro">Conexiuni directe cu trenul și drum ușor cu mașina din Budapesta.</span><span class="de">Direkte Bahnverbindungen und eine einfache Fahrt von Budapest.</span></span>
+          <span class="nearby-meta"><span class="en">Food & shops</span><span class="hu">Ételek és boltok</span><span class="ro">Mâncare și magazine</span><span class="de">Essen & Einkaufen</span></span>
+          <strong><span class="en">Kistücsök and provisions</span><span class="hu">Kistücsök és jó alapanyagok</span><span class="ro">Kistücsök și provizii bune</span><span class="de">Kistücsök und Vorräte</span></strong>
+          <span><span class="en">Bib Gourmand dining, relaxed summer meals, and small shops for breakfast or terrace dinners.</span><span class="hu">Bib Gourmand étterem, könnyű nyári vacsorák és kis boltok reggelihez vagy teraszos estékhez.</span><span class="ro">Restaurant Bib Gourmand, mese lejere de vară și magazine mici pentru mic dejun sau cine pe terasă.</span><span class="de">Bib-Gourmand-Küche, entspannte Sommeressen und kleine Läden für Frühstück oder Terrassenabende.</span></span>
         </div>
         <div class="nearby-item">
           <span class="nearby-meta"><span class="en">Cycling</span><span class="hu">Kerékpár</span><span class="ro">Bicicletă</span><span class="de">Radfahren</span></span>
-          <strong><span class="en">Balaton Bike Ring</span><span class="hu">Balatoni bringakör</span><span class="ro">Circuitul de biciclete Balaton</span><span class="de">Balaton-Radrunde</span></strong>
-          <span><span class="en">The roughly 200 km lake cycle route passes through Balatonszemes.</span><span class="hu">A nagyjából 200 km-es balatoni bringakör Balatonszemesen is áthalad.</span><span class="ro">Traseul ciclist de aproximativ 200 km al lacului trece prin Balatonszemes.</span><span class="de">Die rund 200 km lange Balaton-Radrunde führt durch Balatonszemes.</span></span>
+          <strong><span class="en">The 204 km Bike Ring</span><span class="hu">A 204 km-es bringakör</span><span class="ro">Circuitul de 204 km</span><span class="de">Die 204 km Radrunde</span></strong>
+          <span><span class="en">The Balaton Bike Ring passes through Balatonszemes for easy lake rides or bigger tours.</span><span class="hu">A Balatoni bringakör Balatonszemesen halad át, könnyű parti tekerésekhez vagy nagyobb túrákhoz.</span><span class="ro">Circuitul de biciclete Balaton trece prin Balatonszemes, pentru plimbări ușoare sau ture mai lungi.</span><span class="de">Die Balaton-Radrunde führt durch Balatonszemes, für leichte Seewege oder größere Touren.</span></span>
         </div>
         <div class="nearby-item">
-          <span class="nearby-meta"><span class="en">Waterfront</span><span class="hu">Vízpart</span><span class="ro">Malul apei</span><span class="de">Ufer</span></span>
-          <strong><span class="en">Marina and evening walks</span><span class="hu">Marina és esti séták</span><span class="ro">Marină și plimbări de seară</span><span class="de">Marina und Abendspaziergänge</span></strong>
-          <span><span class="en">The nearby harbour, old trees, and quiet streets make the lake feel close all day.</span><span class="hu">A közeli kikötő, az öreg fák és a csendes utcák egész nap közel hozzák a Balatont.</span><span class="ro">Portul din apropiere, copacii bătrâni și străzile liniștite țin lacul aproape toată ziua.</span><span class="de">Der nahe Hafen, alte Bäume und ruhige Straßen halten den See den ganzen Tag nah.</span></span>
+          <span class="nearby-meta"><span class="en">Fishing</span><span class="hu">Horgászat</span><span class="ro">Pescuit</span><span class="de">Angeln</span></span>
+          <strong><span class="en">Quiet shore fishing</span><span class="hu">Csendes parti horgászat</span><span class="ro">Pescuit liniștit de pe mal</span><span class="de">Ruhiges Uferangeln</span></strong>
+          <span><span class="en">Calm southern-shore spots are nearby; a valid local Balaton fishing permit is needed.</span><span class="hu">Nyugodt déli parti horgászhelyek vannak a közelben; érvényes balatoni engedély szükséges.</span><span class="ro">Locuri liniștite de pescuit pe malul sudic sunt aproape; este necesar permis local pentru Balaton.</span><span class="de">Ruhige Angelplätze am Südufer liegen nah; ein gültiger lokaler Balaton-Angelschein ist nötig.</span></span>
         </div>
       </div>
     </div>
@@ -1875,10 +1861,10 @@
           <span class="ro">Disponibilitate</span><span class="de">Verfügbarkeit</span>
         </p>
         <h2>
-          <span class="en">See which dates<br/>are available</span>
-          <span class="hu">Nézd meg,<br/>mely napok szabadok</span>
-          <span class="ro">Vezi ce date<br/>sunt disponibile</span>
-          <span class="de">Sehen Sie,<br/>welche Daten frei sind</span>
+          <span class="en">See which dates are available</span>
+          <span class="hu">Nézd meg, mely napok szabadok</span>
+          <span class="ro">Vezi ce date sunt disponibile</span>
+          <span class="de">Sehen Sie, welche Daten frei sind</span>
         </h2>
         <div class="section-rule"></div>
         <p class="en">Booked and on-hold periods are marked below. Swipe or use the arrows to browse upcoming months, or contact us for the most current availability.</p>
@@ -1890,9 +1876,6 @@
       <div class="fade-in">
         <div class="availability-header">
           <div class="availability-window" id="availability-window"></div>
-          <div class="availability-hint">
-            <span class="en">Swipe or scroll</span><span class="hu">Lapozható</span><span class="ro">Glisează</span><span class="de">Wischbar</span>
-          </div>
         </div>
         <div class="availability-shell">
           <button class="availability-nav prev" id="availability-prev" type="button" aria-label="Previous month">‹</button>
@@ -2055,6 +2038,12 @@
       { en: 'November', hu: 'November', ro: 'Noiembrie', de: 'November' },
       { en: 'December', hu: 'December', ro: 'Decembrie', de: 'Dezember' }
     ];
+    const availabilityWeekdays = {
+      en: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+      hu: ['H', 'K', 'Sze', 'Cs', 'P', 'Szo', 'V'],
+      ro: ['L', 'M', 'Mi', 'J', 'V', 'S', 'D'],
+      de: ['M', 'D', 'M', 'D', 'F', 'S', 'S']
+    };
     let availabilityEvents = [];
     let availabilityWindow = defaultAvailabilityWindow();
     let availabilityMonths = [];
@@ -2095,7 +2084,7 @@
       return `
         <div class="month-card">
           <div class="month-name">${localizedSpans(withYear(month.names, year))}</div>
-          <div class="calendar-weekdays"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+          <div class="calendar-weekdays">${localizedWeekdays()}</div>
           <div class="calendar-days">${cells.join('')}</div>
         </div>
       `;
@@ -2117,6 +2106,12 @@
 
     function localizedSpans(labels) {
       return `<span class="en">${labels.en}</span><span class="hu">${labels.hu}</span><span class="ro">${labels.ro}</span><span class="de">${labels.de}</span>`;
+    }
+
+    function localizedWeekdays() {
+      return Object.entries(availabilityWeekdays)
+        .map(([lang, weekdays]) => `<span class="${lang}">${weekdays.map(day => `<span>${day}</span>`).join('')}</span>`)
+        .join('');
     }
 
     function withYear(labels, year) {
