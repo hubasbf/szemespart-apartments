@@ -137,9 +137,9 @@
     nav.scrolled .nav-links a { color: var(--text-mid); text-shadow: none; }
     .nav-links a:hover { color: var(--teal) !important; }
     .nav-links a.nav-cta {
-      border-bottom: 1px solid currentColor;
-      padding-bottom: 3px;
+      color: rgba(255,255,255,0.98);
     }
+    nav.scrolled .nav-links a.nav-cta { color: var(--text); }
 
     .menu-btn {
       display: none;
@@ -921,42 +921,12 @@
       line-height: 1.65;
     }
 
-    /* ── LOCATION ── */
-    #location {
-      background: var(--bg);
-      max-width: 1280px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-    }
-    .location-text p {
-      color: var(--text-mid);
-      font-size: 15px;
-      line-height: 1.9;
-      max-width: 480px;
-    }
-    .location-text p + p { margin-top: 16px; }
-    .location-text strong { color: var(--text); font-weight: 500; }
-    .location-map {
-      height: 440px;
-      background: var(--border);
-      overflow: hidden;
-    }
-    .location-map iframe {
-      width: 100%; height: 100%;
-      border: none;
-      filter: grayscale(0.25) contrast(1.05);
-    }
-    body.dark .location-map iframe { filter: grayscale(0.35) brightness(0.9) contrast(1.05); }
-
     /* ── CONTACT ── */
     #contact {
       background: var(--inv-bg);
       color: var(--inv-text);
       text-align: center;
-      padding: 104px 48px;
+      padding: 72px 48px;
       transition: background 0.35s;
     }
     #contact .section-label { color: var(--inv-mid); letter-spacing: 0.32em; }
@@ -964,23 +934,24 @@
       color: var(--inv-text);
       margin: 0 auto;
       max-width: none;
+      font-size: clamp(42px, 5vw, 72px);
     }
     #contact .section-rule {
       background: var(--inv-border);
-      margin: 28px auto;
+      margin: 22px auto 26px;
       opacity: 1;
     }
     .contact-name {
       font-family: var(--serif);
-      font-size: 26px;
+      font-size: 23px;
       font-weight: 400;
       letter-spacing: 0.04em;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       color: var(--inv-text);
     }
     .contact-phone {
       font-family: var(--sans);
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 300;
       letter-spacing: 0.08em;
       color: var(--inv-text);
@@ -1000,40 +971,44 @@
       overflow-wrap: anywhere;
     }
     .contact-email:hover { opacity: 0.7; }
+    .contact-map {
+      height: 260px;
+      max-width: 760px;
+      margin: 24px auto 0;
+      background: var(--inv-border);
+      overflow: hidden;
+    }
+    .contact-map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      filter: grayscale(0.3) brightness(0.9) contrast(1.05);
+    }
     .contact-people {
       display: grid;
       grid-template-columns: repeat(2, minmax(220px, 1fr));
-      gap: 28px;
+      gap: 24px;
       max-width: 760px;
-      margin: 34px auto 0;
+      margin: 24px auto 0;
     }
     .contact-person {
       border-top: 1px solid var(--inv-border);
-      padding: 28px 18px 0;
+      padding: 20px 18px 0;
     }
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 26px;
-      margin-top: 26px;
-      flex-wrap: wrap;
+    .contact-shared {
+      border-top: 1px solid var(--inv-border);
+      max-width: 760px;
+      margin: 24px auto 0;
+      padding-top: 20px;
     }
-    .contact-links a {
+    .contact-shared .contact-email {
       color: var(--inv-text);
-      text-decoration: none;
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      border-bottom: 1px solid var(--inv-border);
-      padding-bottom: 5px;
-      transition: opacity 0.3s, border-color 0.3s;
-    }
-    .contact-links a:hover {
-      opacity: 0.7;
-      border-color: var(--inv-mid);
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      margin-top: 0;
     }
     .contact-address {
-      margin-top: 28px;
+      margin-top: 18px;
       font-size: 11px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -1218,8 +1193,6 @@
       .month-card { flex-basis: calc((100% - 1px) / 2); }
       .availability-header { flex-direction: column; align-items: flex-start; gap: 8px; }
       .stay-inner { grid-template-columns: 1fr; gap: 40px; }
-      #location { grid-template-columns: 1fr; gap: 40px; padding: 72px 24px; }
-      .location-map { height: 280px; }
       footer { padding: 20px 24px; }
       .hero-content { left: 24px; right: 24px; bottom: 64px; }
       .hero-scroll { right: 24px; }
@@ -1245,7 +1218,10 @@
       .room-grid.cols-2 .img-wrap { height: 240px; }
       .lang-btn { padding: 2px 3px; font-size: 10px; }
       .nav-controls { gap: 10px; }
-      .contact-people { grid-template-columns: 1fr; gap: 34px; }
+      #contact { padding: 60px 22px; }
+      #contact h2 { font-size: clamp(34px, 11vw, 48px); }
+      .contact-people { grid-template-columns: 1fr; gap: 22px; }
+      .contact-map { height: 220px; }
     }
   </style>
 </head>
@@ -1259,7 +1235,6 @@
       <a href="#about"><span class="en">About</span><span class="hu">Rólunk</span><span class="ro">Despre</span><span class="de">Über uns</span></a>
       <a href="#gallery"><span class="en">Gallery</span><span class="hu">Galéria</span><span class="ro">Galerie</span><span class="de">Galerie</span></a>
       <a href="#features"><span class="en">Amenities</span><span class="hu">Felszereltség</span><span class="ro">Dotări</span><span class="de">Ausstattung</span></a>
-      <a href="#location"><span class="en">Location</span><span class="hu">Elhelyezkedés</span><span class="ro">Locație</span><span class="de">Lage</span></a>
       <a href="#nearby"><span class="en">Nearby</span><span class="hu">A közelben</span><span class="ro">Aproape</span><span class="de">Nähe</span></a>
       <a href="#availability"><span class="en">Availability</span><span class="hu">Elérhetőség</span><span class="ro">Disponibilitate</span><span class="de">Verfügbarkeit</span></a>
       <a href="#contact" class="nav-cta"><span class="en">Contact</span><span class="hu">Kapcsolat</span><span class="ro">Contact</span><span class="de">Kontakt</span></a>
@@ -1376,6 +1351,18 @@
       <p class="de" style="margin-top:16px">
         31&nbsp;m² Wohnung mit 12&nbsp;m² Terrasse, liebevoll für vier eingerichtet, in einem ruhigen modernen Komplex. Helle Räume, warmes Licht, und der Balaton immer in Reichweite.
       </p>
+      <p class="en" style="margin-top:16px">
+        Part of <strong>Szemespart II</strong> at Ady Endre utca 8, HÁT sits in the heart of Balatonszemes: close to the free beach, marina, restaurants, and direct Budapest connections.
+      </p>
+      <p class="hu" style="margin-top:16px">
+        A HÁT a <strong>Szemespart II</strong> része az Ady Endre utca 8. alatt, Balatonszemes szívében: közel a szabadstrandhoz, a marinához, az éttermekhez és a közvetlen budapesti kapcsolatokhoz.
+      </p>
+      <p class="ro" style="margin-top:16px">
+        HÁT face parte din <strong>Szemespart II</strong>, pe Ady Endre utca 8, în inima Balatonszemes: aproape de plaja liberă, marină, restaurante și legături directe cu Budapesta.
+      </p>
+      <p class="de" style="margin-top:16px">
+        HÁT gehört zu <strong>Szemespart II</strong> in der Ady Endre utca 8, mitten in Balatonszemes: nahe Freistrand, Marina, Restaurants und direkten Verbindungen nach Budapest.
+      </p>
     </div>
 
     <div class="about-stats fade-in">
@@ -1445,7 +1432,7 @@
       <div class="hl-icon">04</div>
       <div class="hl-text">
         <div class="hl-title"><span class="en">137 km from Budapest</span><span class="hu">137 km Budapesttől</span><span class="ro">137 km de la Budapesta</span><span class="de">137 km von Budapest</span></div>
-        <div class="hl-sub"><span class="en">1h 14 min on the M7 · direct trains available</span><span class="hu">1 ó 14 perc az M7-esen · közvetlen vonat is</span><span class="ro">1h 14 min pe M7 · trenuri directe disponibile</span><span class="de">1h 14 min auf der M7 · Direktzüge verfügbar</span></div>
+        <div class="hl-sub"><span class="en">Easy M7 drive · frequent summer trains under 2 hours</span><span class="hu">Könnyű út az M7-esen · sűrű nyári vonatok 2 órán belül</span><span class="ro">Drum ușor pe M7 · trenuri frecvente vara sub 2 ore</span><span class="de">Einfache Fahrt über die M7 · häufige Sommerzüge unter 2 Stunden</span></div>
       </div>
     </div>
     <div class="hl-sep"></div>
@@ -1473,6 +1460,10 @@
           <span class="de">Strand, Marina<br/>und offenes Wasser</span>
         </h2>
         <div class="section-rule"></div>
+        <p class="en">The village beach stretches for 510 metres along the shore, with 43,000 m² of grassy parkland shaded by old trees.</p>
+        <p class="hu">A falusi strand 510 méter hosszan nyúlik el a parton, 43 000 m² füves, fákkal árnyékolt parkkal.</p>
+        <p class="ro">Plaja satului se întinde pe 510 metri de-a lungul malului, cu 43.000 m² de parc înierbat umbrit de copaci bătrâni.</p>
+        <p class="de">Der Dorfstrand erstreckt sich über 510 Meter am Ufer entlang, mit 43.000 m² Grünfläche unter alten Bäumen.</p>
         <p class="en">The apartment sits beside one of Balatonszemes' best everyday luxuries: the free beach, with grass, old trees, shallow water, and wide views across the lake.</p>
         <p class="hu">Az apartman Balatonszemes egyik legjobb mindennapi luxusa mellett van: a szabadstrandnál, füves parttal, öreg fákkal, sekély vízzel és tág balatoni kilátással.</p>
         <p class="ro">Apartamentul este lângă unul dintre cele mai frumoase lucruri simple din Balatonszemes: plaja liberă, cu iarbă, copaci bătrâni, apă mică și priveliști largi peste lac.</p>
@@ -1759,48 +1750,6 @@
     </div>
   </section>
 
-  <!-- LOCATION -->
-  <section id="location">
-    <div class="location-text fade-in">
-      <p class="section-label">
-        <span class="en">Location</span><span class="hu">Elhelyezkedés</span>
-        <span class="ro">Locație</span><span class="de">Lage</span>
-      </p>
-      <h2>
-        <span class="en">Balatonszemes,<br/>Lake Balaton</span>
-        <span class="hu">Balatonszemes,<br/>Balaton</span>
-        <span class="ro">Balatonszemes,<br/>Lacul Balaton</span>
-        <span class="de">Balatonszemes,<br/>Balaton</span>
-      </h2>
-      <div class="section-rule"></div>
-
-      <p class="en">HÁT is part of <strong>Szemespart II</strong> — a modern residential complex right in the heart of Balatonszemes, at Ady Endre utca 8. The complex sits moments from the lake shore, combining contemporary architecture with the quiet village atmosphere that makes this stretch of the Balaton so special.</p>
-      <p class="hu">A HÁT a <strong>Szemespart II</strong> komplexum része — egy modern, igényesen tervezett épületegyüttes Balatonszemes szívében, az Ady Endre utca 8. szám alatt. A komplexum közvetlenül a tóparton helyezkedik el, ötvözve a kortárs építészetet a balatoni kisváros csendes hangulatával.</p>
-      <p class="ro">HÁT face parte din complexul <strong>Szemespart II</strong> — un complex rezidențial modern în inima satului Balatonszemes, la Ady Endre utca 8. Complexul se află la câțiva pași de malul lacului, combinând arhitectura contemporană cu atmosfera liniștită a satului.</p>
-      <p class="de">HÁT ist Teil des <strong>Szemespart II</strong>-Komplexes — eine moderne Wohnanlage im Herzen von Balatonszemes, Ady Endre utca 8. Der Komplex liegt direkt am Seeufer und verbindet zeitgenössische Architektur mit der ruhigen Dorfatmosphäre.</p>
-
-      <p class="en" style="margin-top:16px">The village beach stretches for 510 metres along the shore, with a generous 43,000 m² of grassy parkland shaded by old trees — one of the most beautiful and traditional bathing spots on the entire Balaton. Grass, water, and light filtering through the canopy.</p>
-      <p class="hu" style="margin-top:16px">A falusi strand 510 méter hosszan nyúlik el a tóparton, 43 000 m² füves, fákkal árnyékolt parkkal — a Balaton egyik legszebb és leghagyományosabb fürdőhelye. Fű, víz, és a lombkoronán átsütő fény.</p>
-      <p class="ro" style="margin-top:16px">Plaja satului se întinde pe 510 metri de-a lungul malului, cu 43.000 m² de parc înierbat umbrit de copaci bătrâni — unul dintre cele mai frumoase și tradiționale locuri de scăldat de pe întreg Balatonul.</p>
-      <p class="de" style="margin-top:16px">Der Dorfstrand erstreckt sich über 510 Meter entlang des Ufers, mit 43.000 m² Grünfläche unter alten Bäumen — einer der schönsten und traditionsreichsten Badeplätze am gesamten Balaton.</p>
-
-      <p class="en" style="margin-top:16px">Just 130 km from Budapest via the M7 motorway (~1h 15min), with direct train connections. In the village: Kistücsök and other good restaurants, a marina and yacht harbour, the Latinovits Zoltán Cultural Centre, and the annual Bujtor Film Festival.</p>
-      <p class="hu" style="margin-top:16px">Mindössze 130 km-re Budapesttől az M7-esen (~1 ó 15 perc), közvetlen vonatkapcsolattal. A faluban: Kistücsök és más jó éttermek, marina és jachtkikötő, Latinovits Zoltán Művelődési Ház, Bujtor Filmfesztivál.</p>
-      <p class="ro" style="margin-top:16px">La doar 130 km de Budapesta pe autostrada M7 (~1h 15min), cu conexiuni directe de tren. În sat: Kistücsök și alte restaurante bune, o marină și port de iahturi, Centrul Cultural Latinovits Zoltán și Festivalul de Film Bujtor.</p>
-      <p class="de" style="margin-top:16px">Nur 130 km von Budapest über die M7 (~1h 15min), gut mit Direktzügen erreichbar. Im Dorf: Kistücsök und weitere gute Restaurants, Marina und Yachthafen, das Latinovits Zoltán Kulturzentrum und das Bujtor Filmfestival.</p>
-    </div>
-
-    <div class="location-map fade-in">
-      <iframe
-        src="https://maps.google.com/maps?q=Balatonszemes+Ady+Endre+utca+8+8636+Hungary&t=&z=15&ie=UTF8&iwloc=&output=embed"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Szemespart II, Balatonszemes">
-      </iframe>
-    </div>
-  </section>
-
   <!-- NEARBY -->
   <section id="nearby">
     <div class="nearby-inner">
@@ -1916,28 +1865,25 @@
       <div class="contact-person">
         <p class="contact-name">Ági</p>
         <a href="tel:+36307329418" class="contact-phone">+36 30 732 9418</a>
-        <a href="mailto:agnes.schwarzenberger@gmail.com" class="contact-email">agnes.schwarzenberger@gmail.com</a>
-        <div class="contact-links">
-          <a href="tel:+36307329418"><span class="en">Call</span><span class="hu">Hívás</span><span class="ro">Sună</span><span class="de">Anrufen</span></a>
-          <a href="sms:+36307329418"><span class="en">SMS</span><span class="hu">SMS</span><span class="ro">SMS</span><span class="de">SMS</span></a>
-          <a href="mailto:agnes.schwarzenberger@gmail.com"><span class="en">Email</span><span class="hu">Email</span><span class="ro">Email</span><span class="de">Email</span></a>
-        </div>
       </div>
       <div class="contact-person">
         <p class="contact-name">Huba</p>
         <a href="tel:+36308271670" class="contact-phone">+36 30 827 1670</a>
-        <a href="mailto:huba.schwarzenberger@gmail.com" class="contact-email">huba.schwarzenberger@gmail.com</a>
-        <div class="contact-links">
-          <a href="tel:+36308271670"><span class="en">Call</span><span class="hu">Hívás</span><span class="ro">Sună</span><span class="de">Anrufen</span></a>
-          <a href="sms:+36308271670"><span class="en">SMS</span><span class="hu">SMS</span><span class="ro">SMS</span><span class="de">SMS</span></a>
-          <a href="mailto:huba.schwarzenberger@gmail.com"><span class="en">Email</span><span class="hu">Email</span><span class="ro">Email</span><span class="de">Email</span></a>
-        </div>
       </div>
     </div>
-    <div class="contact-links">
-      <a href="https://maps.google.com/?q=Balatonszemes+Ady+Endre+utca+8+8636+Hungary" target="_blank" rel="noopener"><span class="en">Open map</span><span class="hu">Térkép</span><span class="ro">Hartă</span><span class="de">Karte</span></a>
+    <div class="contact-shared">
+      <a href="mailto:hat.apartments@gmail.com" class="contact-email">hat.apartments@gmail.com</a>
     </div>
     <p class="contact-address">Szemespart II · Ady Endre u. 8 · 8636 Balatonszemes</p>
+    <div class="contact-map">
+      <iframe
+        src="https://maps.google.com/maps?q=Balatonszemes+Ady+Endre+utca+8+8636+Hungary&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Szemespart II, Balatonszemes">
+      </iframe>
+    </div>
   </section>
 
   <!-- FOOTER -->
