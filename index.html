@@ -1101,19 +1101,6 @@
       overflow-wrap: anywhere;
     }
     .contact-email:hover { opacity: 0.7; }
-    .contact-map {
-      height: 260px;
-      max-width: 760px;
-      margin: 24px auto 0;
-      background: var(--inv-border);
-      overflow: hidden;
-    }
-    .contact-map iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      filter: grayscale(0.3) brightness(0.9) contrast(1.05);
-    }
     .contact-people {
       display: grid;
       grid-template-columns: repeat(2, minmax(220px, 1fr));
@@ -1138,12 +1125,82 @@
       margin-top: 0;
     }
     .contact-address {
+      display: inline-block;
       margin-top: 18px;
       font-size: 11px;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--inv-mid);
-      opacity: 0.6;
+      opacity: 0.72;
+      text-decoration: none;
+      transition: opacity 0.25s, color 0.25s;
+    }
+    .contact-address:hover {
+      color: var(--teal);
+      opacity: 1;
+    }
+    .arrival-panel {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.82fr) minmax(360px, 1.18fr);
+      gap: 0;
+      max-width: 980px;
+      margin: 28px auto 0;
+      border: 1px solid var(--inv-border);
+      text-align: left;
+      background: rgba(255,255,255,0.025);
+    }
+    .arrival-copy {
+      padding: 30px;
+      border-right: 1px solid var(--inv-border);
+    }
+    .arrival-kicker {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 14px;
+    }
+    .arrival-copy p {
+      color: var(--inv-mid);
+      font-size: 15px;
+      line-height: 1.75;
+      max-width: 430px;
+    }
+    .arrival-points {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .arrival-point {
+      border-top: 1px solid var(--inv-border);
+      padding-top: 12px;
+    }
+    .arrival-point strong {
+      display: block;
+      color: var(--inv-text);
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 300;
+      margin-bottom: 3px;
+    }
+    .arrival-point span {
+      color: var(--inv-mid);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .contact-map {
+      min-height: 360px;
+      background: var(--inv-border);
+      overflow: hidden;
+    }
+    .contact-map iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 360px;
+      border: none;
+      filter: grayscale(0.2) brightness(0.88) contrast(1.08);
     }
 
     /* ── FOOTER ── */
@@ -1379,7 +1436,15 @@
       #contact { padding: 60px 22px; }
       #contact h2 { font-size: clamp(34px, 11vw, 48px); }
       .contact-people { grid-template-columns: 1fr; gap: 22px; }
-      .contact-map { height: 220px; }
+      .arrival-points { grid-template-columns: 1fr; }
+      .arrival-panel { grid-template-columns: 1fr; }
+      .arrival-copy {
+        padding: 24px;
+        border-right: none;
+        border-bottom: 1px solid var(--inv-border);
+      }
+      .contact-map,
+      .contact-map iframe { min-height: 240px; }
     }
   </style>
 </head>
@@ -1881,15 +1946,49 @@
     <div class="contact-shared">
       <a href="mailto:hat.apartments@gmail.com" class="contact-email">hat.apartments@gmail.com</a>
     </div>
-    <p class="contact-address">Szemespart II · Ady Endre u. 8 · 8636 Balatonszemes</p>
-    <div class="contact-map">
-      <iframe
-        src="https://maps.google.com/maps?q=Balatonszemes+Ady+Endre+utca+8+8636+Hungary&t=&z=15&ie=UTF8&iwloc=&output=embed"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Szemespart II, Balatonszemes">
-      </iframe>
+    <a class="contact-address" href="https://www.google.com/maps/search/?api=1&query=Szemespart%20II%20Ady%20Endre%20u.%208%208636%20Balatonszemes%20Hungary" target="_blank" rel="noopener">Szemespart II · Ady Endre u. 8 · 8636 Balatonszemes</a>
+    <div class="arrival-panel fade-in">
+      <div class="arrival-copy">
+        <p class="arrival-kicker">
+          <span class="en">Arrival & location</span>
+          <span class="hu">Érkezés és elhelyezkedés</span>
+          <span class="ro">Sosire și amplasare</span>
+          <span class="de">Anreise & Lage</span>
+        </p>
+        <p>
+          <span class="en">The apartments sit in Szemespart II, beside the quiet lake-side rhythm of Balatonszemes: beach, marina, small shops, restaurants, and summer transport are all close.</span>
+          <span class="hu">Az apartmanok a Szemespart II-ben vannak, Balatonszemes nyugodt parti ritmusában: a strand, a marina, a kis boltok, az éttermek és a nyári közlekedés is közel van.</span>
+          <span class="ro">Apartamentele sunt în Szemespart II, lângă ritmul liniștit al malului din Balatonszemes: plajă, marină, magazine mici, restaurante și transport de vară sunt aproape.</span>
+          <span class="de">Die Apartments liegen im Szemespart II, nah am ruhigen Uferleben von Balatonszemes: Strand, Marina, kleine Läden, Restaurants und Sommerverkehr sind in der Nähe.</span>
+        </p>
+        <div class="arrival-points">
+          <div class="arrival-point">
+            <strong>510 m</strong>
+            <span><span class="en">Free beach</span><span class="hu">Szabadstrand</span><span class="ro">Plajă liberă</span><span class="de">Freistrand</span></span>
+          </div>
+          <div class="arrival-point">
+            <strong>2 h</strong>
+            <span><span class="en">From Budapest</span><span class="hu">Budapesttől</span><span class="ro">Din Budapesta</span><span class="de">Von Budapest</span></span>
+          </div>
+          <div class="arrival-point">
+            <strong>Marina</strong>
+            <span><span class="en">Nearby</span><span class="hu">A közelben</span><span class="ro">Aproape</span><span class="de">In der Nähe</span></span>
+          </div>
+          <div class="arrival-point">
+            <strong>M7</strong>
+            <span><span class="en">Easy drive</span><span class="hu">Könnyű érkezés</span><span class="ro">Drum ușor</span><span class="de">Einfache Fahrt</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-map">
+        <iframe
+          src="https://maps.google.com/maps?q=Balatonszemes+Ady+Endre+utca+8+8636+Hungary&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Szemespart II, Balatonszemes">
+        </iframe>
+      </div>
     </div>
   </section>
 
