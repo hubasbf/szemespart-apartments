@@ -2,12 +2,18 @@ const calendarTimezone = "Europe/Budapest";
 const monthsBeforeCurrent = 1;
 const monthsAfterCurrent = 18;
 
-exports.handler = async () => {
-  const icsUrl = process.env.GOOGLE_CALENDAR_ICS_URL;
+exports.handler = async (event = {}) => {
+  const apartment = normalizeApartment(event.queryStringParameters?.apartment);
+  const icsUrl = calendarUrlForApartment(apartment);
   const calendarWindow = createCalendarWindow(new Date());
 
   if (!icsUrl) {
-    return json({ source: "missing-config", events: [], message: "Set GOOGLE_CALENDAR_ICS_URL to read live Google Calendar data." }, 503);
+    return json({
+      source: "missing-config",
+      apartment,
+      events: [],
+      message: `Set APARTMENT_${apartment}_ICS_URL or GOOGLE_CALENDAR_ICS_URL to read live Google Calendar data.`
+    }, 503);
   }
 
   try {
@@ -19,6 +25,7 @@ exports.handler = async () => {
     const ics = await response.text();
     return json({
       source: "google-calendar",
+      apartment,
       window: calendarWindow,
       events: parseIcsEvents(ics, calendarWindow)
     });
@@ -26,6 +33,15 @@ exports.handler = async () => {
     return json({ source: "error", events: [], message: error.message }, 502);
   }
 };
+
+function normalizeApartment(apartment) {
+  const value = String(apartment || "34").trim();
+  return ["7", "8", "34"].includes(value) ? value : "34";
+}
+
+function calendarUrlForApartment(apartment) {
+  return process.env[`APARTMENT_${apartment}_ICS_URL`] || process.env.GOOGLE_CALENDAR_ICS_URL;
+}
 
 function json(body, statusCode = 200) {
   return {

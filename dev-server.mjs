@@ -53,7 +53,8 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(port, host, () => {
   console.log(`Local preview running at http://${host}:${port}`);
-  console.log(`Availability source: ${process.env.GOOGLE_CALENDAR_ICS_URL ? 'GOOGLE_CALENDAR_ICS_URL from local env' : 'fallback data'}`);
+  const hasCalendarConfig = process.env.GOOGLE_CALENDAR_ICS_URL || process.env.APARTMENT_7_ICS_URL || process.env.APARTMENT_8_ICS_URL || process.env.APARTMENT_34_ICS_URL;
+  console.log(`Availability source: ${hasCalendarConfig ? 'calendar env from local env' : 'missing local calendar env'}`);
 });
 
 async function loadLocalEnv() {

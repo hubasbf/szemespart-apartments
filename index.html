@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HÁT Balaton — Apartment Portrait</title>
+  <title>Szemespart Apartments — Balatonszemes</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -125,6 +125,11 @@
       align-items: center;
       gap: 28px;
     }
+    @media (max-width: 1240px) {
+      .nav-links { gap: 18px; }
+      .nav-apartment-label { display: none; }
+      .nav-apartment-btn { font-size: 10px; padding: 7px 8px; }
+    }
     .nav-links a {
       font-size: 11px;
       letter-spacing: 0.14em;
@@ -140,6 +145,63 @@
       color: rgba(255,255,255,0.98);
     }
     nav.scrolled .nav-links a.nav-cta { color: var(--text); }
+    .nav-apartment-switcher {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.32);
+      background: rgba(0,0,0,0.12);
+      padding: 5px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-4px);
+      transition: opacity 0.25s, transform 0.25s, border-color 0.25s, background 0.25s;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.35);
+    }
+    nav.scrolled .nav-apartment-switcher {
+      border-color: var(--border);
+      background: rgba(255,255,255,0.32);
+      text-shadow: none;
+    }
+    nav.apartment-switcher-visible .nav-apartment-switcher {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .nav-apartment-label {
+      color: rgba(255,255,255,0.78);
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0 3px 0 7px;
+      white-space: nowrap;
+    }
+    nav.scrolled .nav-apartment-label { color: var(--text-mid); }
+    .nav-apartment-btn {
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      color: rgba(255,255,255,0.92);
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: 11px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      padding: 8px 10px;
+      transition: background 0.25s, color 0.25s, border-color 0.25s;
+      white-space: nowrap;
+    }
+    nav.scrolled .nav-apartment-btn {
+      background: transparent;
+      color: var(--text-mid);
+    }
+    .nav-apartment-btn.active,
+    .nav-apartment-btn:hover {
+      border-color: var(--teal);
+      background: var(--teal-dim);
+      color: var(--teal);
+      text-shadow: none;
+    }
 
     .menu-btn {
       display: none;
@@ -270,10 +332,11 @@
     }
     .hero-title {
       font-family: var(--serif);
-      font-size: clamp(72px, 11vw, 140px);
+      font-size: clamp(52px, 8.4vw, 112px);
       font-weight: 300;
-      line-height: 0.88;
+      line-height: 0.94;
       letter-spacing: 0;
+      max-width: 980px;
     }
     .hero-sub {
       font-family: var(--serif);
@@ -433,56 +496,109 @@
       margin-top: 8px;
     }
 
-    /* ── HIGHLIGHTS STRIP ── */
-    #highlights {
-      background: var(--bg-alt);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: stretch;
-      transition: background 0.35s;
-      overflow-x: auto;
+    /* ── APARTMENTS ── */
+    #apartments {
+      background: var(--bg);
+      padding: 92px 48px;
     }
-    .hl-item {
-      flex: 1;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      padding: 36px 32px;
-      min-width: 200px;
+    .apartments-inner {
+      max-width: 1280px;
+      margin: 0 auto;
     }
-    .hl-icon {
-      font-family: var(--serif);
-      font-size: 15px;
-      line-height: 1;
-      color: var(--teal);
-      padding-top: 5px;
-      flex-shrink: 0;
-      min-width: 24px;
+    .apartments-header {
+      display: grid;
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 72px;
+      align-items: end;
+      margin-bottom: 56px;
     }
-    .hl-title {
-      font-family: var(--serif);
-      font-size: 17px;
-      font-weight: 400;
-      color: var(--text);
-      line-height: 1.3;
-      margin-bottom: 6px;
-    }
-    .hl-sub {
-      font-size: 12px;
+    .apartments-header p:not(.section-label) {
       color: var(--text-mid);
-      line-height: 1.55;
+      font-size: 15px;
+      line-height: 1.9;
+      max-width: 620px;
     }
-    .hl-sep {
-      width: 1px;
-      background: var(--border);
-      align-self: stretch;
-      flex-shrink: 0;
+    .apartment-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
     }
-    @media (max-width: 960px) {
-      #highlights { flex-direction: column; }
-      .hl-sep { width: auto; height: 1px; }
-      .hl-item { padding: 28px 24px; min-width: unset; }
+    .apartment-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.35s, border-color 0.35s, background 0.35s, box-shadow 0.35s;
+    }
+    .apartment-card:hover,
+    .apartment-card.active {
+      transform: translateY(-4px);
+      border-color: rgba(45,102,113,0.45);
+    }
+    .apartment-card.active {
+      box-shadow: inset 0 0 0 1px rgba(45,102,113,0.28);
+    }
+    .apartment-card:focus-visible {
+      outline: 2px solid var(--teal);
+      outline-offset: 4px;
+    }
+    .apartment-card .img-wrap {
+      height: 250px;
+    }
+    .apartment-copy {
+      padding: 28px;
+    }
+    .apartment-meta {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .apartment-copy h3 {
+      font-family: var(--serif);
+      font-size: 32px;
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .apartment-copy p {
+      color: var(--text-mid);
+      font-size: 14px;
+      line-height: 1.8;
+      min-height: 76px;
+    }
+    .apartment-facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+    .apartment-facts span {
+      border: 1px solid var(--border);
+      color: var(--text-mid);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 9px;
+    }
+    .apartment-action {
+      display: inline-block;
+      margin-top: 22px;
+      color: var(--teal);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(45,102,113,0.36);
+      padding-bottom: 5px;
+    }
+    .gallery-context {
+      margin-top: 22px;
+      color: var(--teal);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
     }
 
     /* ── GALLERY ── */
@@ -715,6 +831,14 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
     }
+    .availability-context {
+      display: block;
+      color: var(--teal);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 22px;
+    }
     .availability-nav {
       appearance: none;
       border: 1px solid var(--border);
@@ -878,47 +1002,6 @@
       font-size: 12px;
       line-height: 1.7;
       min-height: 21px;
-    }
-
-    /* ── STAY NOTES ── */
-    #stay-notes {
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .stay-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 0.85fr 1.15fr;
-      gap: 72px;
-      align-items: start;
-    }
-    .stay-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-    }
-    .stay-item {
-      background: var(--bg-card);
-      padding: 28px;
-      min-height: 140px;
-      transition: background 0.35s;
-    }
-    .stay-item strong {
-      display: block;
-      font-family: var(--serif);
-      font-size: 20px;
-      font-weight: 400;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-    .stay-item span {
-      display: block;
-      color: var(--text-mid);
-      font-size: 12px;
-      line-height: 1.65;
     }
 
     /* ── CONTACT ── */
@@ -1167,11 +1250,16 @@
         border-bottom: none;
         color: var(--teal);
       }
+      .nav-apartment-switcher { display: none; }
       section { padding: 72px 24px; }
       #intro { padding: 72px 24px 32px; }
       .intro-inner { grid-template-columns: 1fr; gap: 28px; }
       #about { grid-template-columns: 1fr; gap: 48px; padding: 72px 24px; }
       .about-stats { max-width: 400px; }
+      #apartments { padding: 72px 24px; }
+      .apartments-header { grid-template-columns: 1fr; gap: 28px; }
+      .apartment-grid { grid-template-columns: 1fr; }
+      .apartment-copy p { min-height: 0; }
       .gallery-header, .room-title, .room-grid { padding-left: 24px; padding-right: 24px; }
       #shoreline { padding: 72px 24px; }
       .shoreline-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -1192,7 +1280,6 @@
       .nearby-inner { grid-template-columns: 1fr; gap: 40px; }
       .month-card { flex-basis: calc((100% - 1px) / 2); }
       .availability-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-      .stay-inner { grid-template-columns: 1fr; gap: 40px; }
       footer { padding: 20px 24px; }
       .hero-content { left: 24px; right: 24px; bottom: 64px; }
       .hero-scroll { right: 24px; }
@@ -1210,7 +1297,6 @@
       .availability-nav.prev { left: 8px; }
       .availability-nav.next { right: 8px; }
       .month-card { min-height: auto; }
-      .stay-list { grid-template-columns: 1fr; }
       .shoreline-grid {
         grid-template-columns: 1fr;
         grid-template-rows: 320px 220px 220px 220px;
@@ -1229,15 +1315,21 @@
 
   <!-- NAV -->
   <nav id="navbar">
-    <a href="#hero" class="nav-logo">HÁT</a>
+    <a href="#hero" class="nav-logo">SZEMESPART</a>
 
     <div class="nav-links">
-      <a href="#about"><span class="en">About</span><span class="hu">Rólunk</span><span class="ro">Despre</span><span class="de">Über uns</span></a>
-      <a href="#gallery"><span class="en">Gallery</span><span class="hu">Galéria</span><span class="ro">Galerie</span><span class="de">Galerie</span></a>
-      <a href="#features"><span class="en">Amenities</span><span class="hu">Felszereltség</span><span class="ro">Dotări</span><span class="de">Ausstattung</span></a>
       <a href="#nearby"><span class="en">Nearby</span><span class="hu">A közelben</span><span class="ro">Aproape</span><span class="de">Nähe</span></a>
+      <a href="#apartments"><span class="en">Apartments</span><span class="hu">Apartmanok</span><span class="ro">Apartamente</span><span class="de">Apartments</span></a>
+      <a href="#features"><span class="en">Amenities</span><span class="hu">Felszereltség</span><span class="ro">Dotări</span><span class="de">Ausstattung</span></a>
       <a href="#availability"><span class="en">Availability</span><span class="hu">Elérhetőség</span><span class="ro">Disponibilitate</span><span class="de">Verfügbarkeit</span></a>
       <a href="#contact" class="nav-cta"><span class="en">Contact</span><span class="hu">Kapcsolat</span><span class="ro">Contact</span><span class="de">Kontakt</span></a>
+    </div>
+
+    <div class="nav-apartment-switcher" aria-label="Selected apartment">
+      <span class="nav-apartment-label"><span class="en">Viewing</span><span class="hu">Kiválasztva</span><span class="ro">Selectat</span><span class="de">Auswahl</span></span>
+      <button class="nav-apartment-btn active" type="button" data-apartment="7"><span class="en">Apartment 7</span><span class="hu">7-es</span><span class="ro">Ap. 7</span><span class="de">Apartment 7</span></button>
+      <button class="nav-apartment-btn" type="button" data-apartment="8"><span class="en">Apartment 8</span><span class="hu">8-as</span><span class="ro">Ap. 8</span><span class="de">Apartment 8</span></button>
+      <button class="nav-apartment-btn" type="button" data-apartment="34"><span class="en">Apartment 34</span><span class="hu">34-es</span><span class="ro">Ap. 34</span><span class="de">Apartment 34</span></button>
     </div>
 
     <div class="nav-controls">
@@ -1255,7 +1347,7 @@
 
   <!-- HERO -->
   <section id="hero">
-    <img src="images/terrace/terrace-1.png" alt="HÁT Balaton terrace at golden hour" class="hero-img" />
+    <img src="images/shared/building/outside/outside-1.png" alt="Szemespart Apartments building at golden hour" class="hero-img" />
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <p class="hero-eyebrow">
@@ -1264,15 +1356,15 @@
         <span class="ro">Balatonszemes · Ungaria</span>
         <span class="de">Balatonszemes · Ungarn</span>
       </p>
-      <h1 class="hero-title">HÁT</h1>
+      <h1 class="hero-title">Szemespart Apartments</h1>
       <p class="hero-sub">
-        <span class="en">A quiet apartment by the lake, composed for slow mornings, warm evenings, and the small rituals of summer.</span>
-        <span class="hu">Csendes apartman a tó mellett, lassú reggelekhez, meleg estékhez és a nyár apró rítusaihoz.</span>
-        <span class="ro">Un apartament liniștit lângă lac, pentru dimineți lente, seri calde și micile ritualuri ale verii.</span>
-        <span class="de">Ein ruhiges Apartment am See, für langsame Morgen, warme Abende und die kleinen Rituale des Sommers.</span>
+        <span class="en">Three modern apartments by Lake Balaton, close to the beach, marina, village restaurants, and slow summer days.</span>
+        <span class="hu">Három modern apartman a Balaton mellett, közel a strandhoz, a marinához, az éttermekhez és a lassú nyári napokhoz.</span>
+        <span class="ro">Trei apartamente moderne lângă Balaton, aproape de plajă, marină, restaurante și zile lente de vară.</span>
+        <span class="de">Drei moderne Apartments am Balaton, nahe Strand, Marina, Restaurants und langsamen Sommertagen.</span>
       </p>
       <div class="hero-actions">
-        <a href="#gallery" class="hero-link"><span class="en">View the space</span><span class="hu">Nézd meg a tereket</span><span class="ro">Vezi spațiul</span><span class="de">Räume ansehen</span></a>
+        <a href="#apartments" class="hero-link"><span class="en">Choose apartment</span><span class="hu">Apartman választása</span><span class="ro">Alege apartamentul</span><span class="de">Apartment wählen</span></a>
         <a href="#shoreline" class="hero-link"><span class="en">Find it on the shore</span><span class="hu">Hely a parton</span><span class="ro">Locul pe mal</span><span class="de">Lage am Ufer</span></a>
       </div>
     </div>
@@ -1284,166 +1376,6 @@
       <span class="de">Weiter</span>
     </div>
   </section>
-
-  <!-- INTRO -->
-  <section id="intro">
-    <div class="intro-inner fade-in">
-      <p class="intro-kicker">
-        <span class="en">Apartment portrait</span>
-        <span class="hu">Apartman portré</span>
-        <span class="ro">Portret de apartament</span>
-        <span class="de">Apartment-Porträt</span>
-      </p>
-      <div>
-        <p class="intro-statement">
-          <span class="en">A compact, light-filled Balaton home where the terrace becomes the second living room.</span>
-          <span class="hu">Kompakt, fénnyel teli balatoni otthon, ahol a terasz a második nappali.</span>
-          <span class="ro">O locuință compactă și luminoasă la Balaton, unde terasa devine al doilea living.</span>
-          <span class="de">Ein kompaktes, lichtes Zuhause am Balaton, in dem die Terrasse zum zweiten Wohnzimmer wird.</span>
-        </p>
-        <p class="intro-note">
-          <span class="en">HÁT keeps the essentials close: lake, shade, quiet interiors, and a village rhythm just outside the door.</span>
-          <span class="hu">A HÁT közel tartja a lényeget: tó, árnyék, csendes belső terek, és a falu ritmusa az ajtón túl.</span>
-          <span class="ro">HÁT păstrează aproape esențialul: lacul, umbra, interioarele liniștite și ritmul satului chiar dincolo de ușă.</span>
-          <span class="de">HÁT hält das Wesentliche nah: See, Schatten, ruhige Innenräume und den Rhythmus des Dorfes direkt vor der Tür.</span>
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="about-text fade-in">
-      <p class="section-label">
-        <span class="en">The apartment</span>
-        <span class="hu">Az apartman</span>
-        <span class="ro">Apartamentul</span>
-        <span class="de">Die Wohnung</span>
-      </p>
-      <h2>
-        <span class="en">Light, space,<br/>and the lake</span>
-        <span class="hu">Fény, tér<br/>és a Balaton</span>
-        <span class="ro">Lumină, spațiu<br/>și lacul</span>
-        <span class="de">Licht, Raum<br/>und der See</span>
-      </h2>
-      <div class="section-rule"></div>
-      <p class="en">
-        HÁT is a true <em>lakeside apartment</em> — the Balatonszemes szabadstrand, one of the most beautiful free beaches on the lake, is literally steps from the back of the complex. Wake up, walk out, and you're on the water.
-      </p>
-      <p class="hu">
-        A HÁT igazi <em>parti szállás</em> — Balatonszemes szabadstrandja, a Balaton egyik legszebb és leghangulatosabb szabad strandja, szó szerint a komplexum mögött kezdődik. Reggel felkelsz, kisétálsz, és már a víznél vagy.
-      </p>
-      <p class="ro">
-        HÁT este un adevărat <em>apartament la mal de lac</em> — plaja liberă din Balatonszemes, una dintre cele mai frumoase de pe Balaton, se află literalmente în spatele complexului. Te trezești, ieși, și ești deja la apă.
-      </p>
-      <p class="de">
-        HÁT ist eine echte <em>Seeunterkunft</em> — der Balatonszemeser Szabadstrand, einer der schönsten freien Strände am Balaton, beginnt buchstäblich hinter dem Komplex. Aufwachen, hinausgehen, Wasser.
-      </p>
-      <p class="en" style="margin-top:16px">
-        A 31&nbsp;m² apartment with a 12&nbsp;m² private terrace, thoughtfully furnished for four, in a quiet modern complex. Bright interiors, warm light, and the Balaton always close.
-      </p>
-      <p class="hu" style="margin-top:16px">
-        31&nbsp;m² apartman, 12&nbsp;m² saját terasszal, gondosan berendezve négy főnek, egy csendes modern komplexumban. Világos terek, meleg fény, és a Balaton mindig karnyújtásnyira.
-      </p>
-      <p class="ro" style="margin-top:16px">
-        Un apartament de 31&nbsp;m² cu terasă privată de 12&nbsp;m², mobilat cu grijă pentru patru persoane, într-un complex modern și liniștit. Spații luminoase, lumină caldă, și Balatonul mereu aproape.
-      </p>
-      <p class="de" style="margin-top:16px">
-        31&nbsp;m² Wohnung mit 12&nbsp;m² Terrasse, liebevoll für vier eingerichtet, in einem ruhigen modernen Komplex. Helle Räume, warmes Licht, und der Balaton immer in Reichweite.
-      </p>
-      <p class="en" style="margin-top:16px">
-        Part of <strong>Szemespart II</strong> at Ady Endre utca 8, HÁT sits in the heart of Balatonszemes: close to the free beach, marina, restaurants, and direct Budapest connections.
-      </p>
-      <p class="hu" style="margin-top:16px">
-        A HÁT a <strong>Szemespart II</strong> része az Ady Endre utca 8. alatt, Balatonszemes szívében: közel a szabadstrandhoz, a marinához, az éttermekhez és a közvetlen budapesti kapcsolatokhoz.
-      </p>
-      <p class="ro" style="margin-top:16px">
-        HÁT face parte din <strong>Szemespart II</strong>, pe Ady Endre utca 8, în inima Balatonszemes: aproape de plaja liberă, marină, restaurante și legături directe cu Budapesta.
-      </p>
-      <p class="de" style="margin-top:16px">
-        HÁT gehört zu <strong>Szemespart II</strong> in der Ady Endre utca 8, mitten in Balatonszemes: nahe Freistrand, Marina, Restaurants und direkten Verbindungen nach Budapest.
-      </p>
-    </div>
-
-    <div class="about-stats fade-in">
-      <div class="stat">
-        <div class="stat-number">31<span class="stat-unit"> m²</span></div>
-        <div class="stat-label">
-          <span class="en">Living space</span><span class="hu">Alapterület</span>
-          <span class="ro">Suprafață</span><span class="de">Wohnfläche</span>
-        </div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">12<span class="stat-unit"> m²</span></div>
-        <div class="stat-label">
-          <span class="en">Private terrace</span><span class="hu">Saját terasz</span>
-          <span class="ro">Terasă privată</span><span class="de">Terrasse</span>
-        </div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">4</div>
-        <div class="stat-label">
-          <span class="en">Guests</span><span class="hu">Fő</span>
-          <span class="ro">Persoane</span><span class="de">Gäste</span>
-        </div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">
-          <span class="en">2<span class="stat-unit" style="font-size:20px">nd</span></span>
-          <span class="hu">2.</span>
-          <span class="ro">2</span>
-          <span class="de">2.</span>
-        </div>
-        <div class="stat-label">
-          <span class="en">Floor</span><span class="hu">Emelet</span>
-          <span class="ro">Etaj</span><span class="de">Etage</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HIGHLIGHTS STRIP -->
-  <div id="highlights">
-    <div class="hl-item fade-in">
-      <div class="hl-icon">01</div>
-      <div class="hl-text">
-        <div class="hl-title"><span class="en">Excellent water quality</span><span class="hu">Kiváló vízminőség</span><span class="ro">Calitate excelentă a apei</span><span class="de">Ausgezeichnete Wasserqualität</span></div>
-        <div class="hl-sub"><span class="en">EU-certified · sandy lake bed · depth from 30 cm</span><span class="hu">EU-minősítés · homokos meder · 30 cm-es mélységtől</span><span class="ro">Certificat EU · fund nisipos · adâncime de la 30 cm</span><span class="de">EU-zertifiziert · Sandgrund · Tiefe ab 30 cm</span></div>
-      </div>
-    </div>
-    <div class="hl-sep"></div>
-    <div class="hl-item fade-in">
-      <div class="hl-icon">02</div>
-      <div class="hl-text">
-        <div class="hl-title"><span class="en">510 m of free beach</span><span class="hu">510 m-es szabadstrand</span><span class="ro">510 m de plajă liberă</span><span class="de">510 m Freistrand</span></div>
-        <div class="hl-sub"><span class="en">43,000 m² of grassy parkland · right behind the complex</span><span class="hu">43 000 m² füves park · közvetlenül a komplexum mögött</span><span class="ro">43.000 m² parc înierbat · chiar în spatele complexului</span><span class="de">43.000 m² Grünfläche · direkt hinter dem Komplex</span></div>
-      </div>
-    </div>
-    <div class="hl-sep"></div>
-    <div class="hl-item fade-in">
-      <div class="hl-icon">03</div>
-      <div class="hl-text">
-        <div class="hl-title"><span class="en">Balatonboglár wine country</span><span class="hu">Balatonboglári borvidék</span><span class="ro">Regiunea viticolă Balatonboglár</span><span class="de">Weinregion Balatonboglár</span></div>
-        <div class="hl-sub"><span class="en">Local estates and cellars minutes away</span><span class="hu">Helyi borászatok percekre</span><span class="ro">Crame locale la câteva minute</span><span class="de">Lokale Weingüter in Minuten erreichbar</span></div>
-      </div>
-    </div>
-    <div class="hl-sep"></div>
-    <div class="hl-item fade-in">
-      <div class="hl-icon">04</div>
-      <div class="hl-text">
-        <div class="hl-title"><span class="en">137 km from Budapest</span><span class="hu">137 km Budapesttől</span><span class="ro">137 km de la Budapesta</span><span class="de">137 km von Budapest</span></div>
-        <div class="hl-sub"><span class="en">Easy M7 drive · frequent summer trains under 2 hours</span><span class="hu">Könnyű út az M7-esen · sűrű nyári vonatok 2 órán belül</span><span class="ro">Drum ușor pe M7 · trenuri frecvente vara sub 2 ore</span><span class="de">Einfache Fahrt über die M7 · häufige Sommerzüge unter 2 Stunden</span></div>
-      </div>
-    </div>
-    <div class="hl-sep"></div>
-    <div class="hl-item fade-in">
-      <div class="hl-icon">05</div>
-      <div class="hl-text">
-        <div class="hl-title"><span class="en">Resort since the 1880s</span><span class="hu">Üdülőhely az 1880-as évektől</span><span class="ro">Stațiune de vacanță din anii 1880</span><span class="de">Ferienort seit den 1880ern</span></div>
-        <div class="hl-sub"><span class="en">Marina since 1913 · Kistücsök, Hungary's most celebrated countryside restaurant</span><span class="hu">Marina 1913 óta · Kistücsök, az ország leghíresebb vidéki étterme</span><span class="ro">Marină din 1913 · Kistücsök, cel mai renumit restaurant rural din Ungaria</span><span class="de">Marina seit 1913 · Kistücsök, Ungarns bekanntestes Landrestaurant</span></div>
-      </div>
-    </div>
-  </div>
 
   <!-- SHORELINE -->
   <section id="shoreline">
@@ -1474,10 +1406,102 @@
         <p class="de">Marina und Uferwege geben einen zweiten Rhythmus: Morgenspaziergänge, Boote im Schilf, Radtage und Rückkehr vom Wasser im goldenen Licht.</p>
       </div>
       <div class="shoreline-grid fade-in">
-        <div class="img-wrap"><img src="images/strand/strand-2.png" alt="Balatonszemes free beach with old trees" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/strand/strand-3.png" alt="Balatonszemes marina" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/strand/strand-1.png" alt="Sandy beach and lake shore" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/strand/strand-4.png" alt="Lake Balaton from the water" loading="lazy" /></div>
+        <div class="img-wrap"><img src="images/shared/strand/strand/strand-2.png" alt="Balatonszemes free beach with old trees" loading="lazy" /></div>
+        <div class="img-wrap"><img src="images/shared/strand/strand/strand-3.png" alt="Balatonszemes marina" loading="lazy" /></div>
+        <div class="img-wrap"><img src="images/shared/strand/strand/strand-1.png" alt="Sandy beach and lake shore" loading="lazy" /></div>
+        <div class="img-wrap"><img src="images/shared/strand/strand/strand-4.png" alt="Lake Balaton from the water" loading="lazy" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APARTMENTS -->
+  <section id="apartments">
+    <div class="apartments-inner">
+      <div class="apartments-header fade-in">
+        <div>
+          <p class="section-label">
+            <span class="en">Apartments</span><span class="hu">Apartmanok</span>
+            <span class="ro">Apartamente</span><span class="de">Apartments</span>
+          </p>
+          <h2>
+            <span class="en">Choose your<br/>Balaton base</span>
+            <span class="hu">Válaszd ki<br/>a balatoni bázist</span>
+            <span class="ro">Alege baza<br/>ta la Balaton</span>
+            <span class="de">Wählen Sie<br/>Ihr Balaton-Zuhause</span>
+          </h2>
+          <div class="section-rule"></div>
+        </div>
+        <p>
+          <span class="en">Three apartments in Szemespart II, moments from the free beach and marina. Apartments 7 and 8 are larger ground-floor homes with terrace and shared garden access; Apartment 34 sits above with a lighter upper-floor view.</span>
+          <span class="hu">Három apartman a Szemespart II-ben, pár lépésre a szabadstrandtól és a marinától. A 7-es és 8-as tágasabb földszinti lakás terasszal és közös kertkapcsolattal; a 34-es világosabb, felső szinti kilátással vár.</span>
+          <span class="ro">Trei apartamente în Szemespart II, la câteva momente de plaja liberă și marină. Apartamentele 7 și 8 sunt mai spațioase, la parter, cu terasă și acces la grădină; apartamentul 34 are lumină și vedere de la etaj.</span>
+          <span class="de">Drei Apartments im Szemespart II, nur wenige Schritte von Freistrand und Marina entfernt. Apartment 7 und 8 sind größere Erdgeschosswohnungen mit Terrasse und Gemeinschaftsgarten; Apartment 34 liegt heller in der oberen Etage.</span>
+        </p>
+      </div>
+
+      <div class="apartment-grid fade-in">
+        <article class="apartment-card active" id="apartment-7" data-apartment="7" role="button" tabindex="0">
+          <div class="img-wrap"><img src="images/apartments/7/living/living-1.png" alt="Apartment 7 living and dining area" loading="lazy" /></div>
+          <div class="apartment-copy">
+            <span class="apartment-meta">
+              <span class="en">Ground floor · garden</span><span class="hu">Földszint · kertkapcsolat</span>
+              <span class="ro">Parter · grădină</span><span class="de">Erdgeschoss · Garten</span>
+            </span>
+            <h3><span class="en">Apartment 7</span><span class="hu">7-es apartman</span><span class="ro">Apartamentul 7</span><span class="de">Apartment 7</span></h3>
+            <p>
+              <span class="en">A 41 m² one-bedroom apartment for four, with a kitchen-living room, 12 m² terrace, and access to the shared 80 m² garden.</span>
+              <span class="hu">41 m²-es, egyszobás apartman négy főnek, konyha-nappalival, 12 m²-es terasszal és a közös 80 m²-es kert használatával.</span>
+              <span class="ro">Apartament cu un dormitor de 41 m² pentru patru persoane, cu bucătărie-living, terasă de 12 m² și acces la grădina comună de 80 m².</span>
+              <span class="de">41 m² Apartment mit einem Schlafzimmer für vier Personen, Wohnküche, 12 m² Terrasse und Zugang zum 80 m² Gemeinschaftsgarten.</span>
+            </p>
+            <div class="apartment-facts">
+              <span>4</span><span>41 m²</span><span>12 m²</span><span>3 TV</span>
+            </div>
+            <span class="apartment-action"><span class="en">View this apartment</span><span class="hu">Ezt nézem meg</span><span class="ro">Vezi apartamentul</span><span class="de">Apartment ansehen</span></span>
+          </div>
+        </article>
+
+        <article class="apartment-card" id="apartment-8" data-apartment="8" role="button" tabindex="0">
+          <div class="img-wrap"><img src="images/apartments/8/terrace/terrace-1.png" alt="Apartment 8 terrace mood" loading="lazy" /></div>
+          <div class="apartment-copy">
+            <span class="apartment-meta">
+              <span class="en">Ground floor · mirrored layout</span><span class="hu">Földszint · tükrözött elrendezés</span>
+              <span class="ro">Parter · plan oglindit</span><span class="de">Erdgeschoss · gespiegelter Grundriss</span>
+            </span>
+            <h3><span class="en">Apartment 8</span><span class="hu">8-as apartman</span><span class="ro">Apartamentul 8</span><span class="de">Apartment 8</span></h3>
+            <p>
+              <span class="en">The twin of Apartment 7: the same generous size, double bed and sofa bed setup, full kitchen, shower bathroom, washing machine, Wi-Fi, and garden rhythm.</span>
+              <span class="hu">A 7-es párja: ugyanaz a tágas méret, franciaágy és kanapéágy, felszerelt konyha, zuhanyzós fürdő, mosógép, Wi-Fi és kertközeli hangulat.</span>
+              <span class="ro">Perechea apartamentului 7: aceeași suprafață generoasă, pat dublu și canapea extensibilă, bucătărie completă, baie cu duș, mașină de spălat, Wi-Fi și ritm de grădină.</span>
+              <span class="de">Das Gegenstück zu Apartment 7: gleiche großzügige Größe, Doppelbett und Schlafsofa, volle Küche, Duschbad, Waschmaschine, Wi-Fi und Gartennähe.</span>
+            </p>
+            <div class="apartment-facts">
+              <span>4</span><span>41 m²</span><span>12 m²</span><span>3 TV</span>
+            </div>
+            <span class="apartment-action"><span class="en">View this apartment</span><span class="hu">Ezt nézem meg</span><span class="ro">Vezi apartamentul</span><span class="de">Apartment ansehen</span></span>
+          </div>
+        </article>
+
+        <article class="apartment-card" id="apartment-34" data-apartment="34" role="button" tabindex="0">
+          <div class="img-wrap"><img src="images/apartments/34/terrace/terrace-2.png" alt="Apartment 34 upper floor view" loading="lazy" /></div>
+          <div class="apartment-copy">
+            <span class="apartment-meta">
+              <span class="en">Second floor · lake-side light</span><span class="hu">Második emelet · balatoni fény</span>
+              <span class="ro">Etajul 2 · lumină de lac</span><span class="de">2. Etage · Licht vom See</span>
+            </span>
+            <h3><span class="en">Apartment 34</span><span class="hu">34-es apartman</span><span class="ro">Apartamentul 34</span><span class="de">Apartment 34</span></h3>
+            <p>
+              <span class="en">A compact 31 m² upper-floor apartment for four, with a 12 m² private terrace, bright interiors, equipped kitchen, washing machine, Wi-Fi, and two TVs.</span>
+              <span class="hu">Kompakt, 31 m²-es felső szinti apartman négy főnek, 12 m² saját terasszal, világos terekkel, felszerelt konyhával, mosógéppel, Wi-Fi-vel és két TV-vel.</span>
+              <span class="ro">Apartament compact de 31 m² la etaj pentru patru persoane, cu terasă privată de 12 m², spații luminoase, bucătărie echipată, mașină de spălat, Wi-Fi și două TV-uri.</span>
+              <span class="de">Kompaktes 31 m² Apartment in der oberen Etage für vier Personen, mit 12 m² Terrasse, hellen Räumen, ausgestatteter Küche, Waschmaschine, Wi-Fi und zwei TVs.</span>
+            </p>
+            <div class="apartment-facts">
+              <span>4</span><span>31 m²</span><span>12 m²</span><span>2 TV</span>
+            </div>
+            <span class="apartment-action"><span class="en">View this apartment</span><span class="hu">Ezt nézem meg</span><span class="ro">Vezi apartamentul</span><span class="de">Apartment ansehen</span></span>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -1490,11 +1514,12 @@
         <span class="ro">Galerie</span><span class="de">Galerie</span>
       </p>
       <h2>
-        <span class="en">Every corner<br/>considered</span>
-        <span class="hu">Minden részlet<br/>átgondolva</span>
-        <span class="ro">Fiecare colț,<br/>gândit</span>
-        <span class="de">Jedes Detail<br/>durchdacht</span>
+        <span class="en">A first look<br/>inside</span>
+        <span class="hu">Első pillantás<br/>belülről</span>
+        <span class="ro">O primă privire<br/>în interior</span>
+        <span class="de">Ein erster Blick<br/>nach innen</span>
       </h2>
+      <p class="gallery-context" id="gallery-context"></p>
     </div>
 
     <div class="room-section fade-in">
@@ -1503,8 +1528,8 @@
         <span class="ro">Exterior</span><span class="de">Außenbereich</span>
       </p>
       <div class="room-grid cols-2">
-        <div class="img-wrap"><img src="images/outside/outside-1.png" alt="Exterior" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/outside/outside-4.png" alt="Complex" loading="lazy" /></div>
+        <div class="img-wrap"><img src="images/shared/building/outside/outside-1.png" alt="Exterior" loading="lazy" /></div>
+        <div class="img-wrap"><img src="images/shared/building/outside/outside-4.png" alt="Complex" loading="lazy" /></div>
       </div>
     </div>
 
@@ -1514,9 +1539,9 @@
         <span class="ro">Terasă</span><span class="de">Terrasse</span>
       </p>
       <div class="room-grid triptych">
-        <div class="img-wrap"><img src="images/terrace/terrace-1.png" alt="Terrace golden hour" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/terrace/terrace-2.png" alt="Terrace view" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/terrace/terrace-4.png" alt="Terrace detail" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/terrace/terrace-1.png" alt="Terrace golden hour" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/terrace/terrace-2.png" alt="Terrace view" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/terrace/terrace-4.png" alt="Terrace detail" loading="lazy" /></div>
       </div>
     </div>
 
@@ -1526,10 +1551,10 @@
         <span class="ro">Living & Sufragerie</span><span class="de">Wohn- & Esszimmer</span>
       </p>
       <div class="room-grid mosaic-4">
-        <div class="img-wrap"><img src="images/living/living-1.png" alt="Living room" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/living/living-2.png" alt="Dining" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/living/living-4.png" alt="Living detail" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/living/living-5.png" alt="Living view" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/living/living-1.png" alt="Living room" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/living/living-2.png" alt="Dining" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/living/living-4.png" alt="Living detail" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/living/living-5.png" alt="Living view" loading="lazy" /></div>
       </div>
     </div>
 
@@ -1539,10 +1564,10 @@
         <span class="ro">Dormitor</span><span class="de">Schlafzimmer</span>
       </p>
       <div class="room-grid cols-2">
-        <div class="img-wrap"><img src="images/bedroom/bedroom-1.png" alt="Bedroom" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/bedroom/bedroom-2.png" alt="Bedroom overview" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/bedroom/bedroom-3.png" alt="Bedroom detail" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/bedroom/bedroom-4.png" alt="Bedroom" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/bedroom/bedroom-1.png" alt="Bedroom" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/bedroom/bedroom-2.png" alt="Bedroom overview" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/bedroom/bedroom-3.png" alt="Bedroom detail" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/bedroom/bedroom-4.png" alt="Bedroom" loading="lazy" /></div>
       </div>
     </div>
 
@@ -1552,8 +1577,8 @@
         <span class="ro">Bucătărie</span><span class="de">Küche</span>
       </p>
       <div class="room-grid cols-2">
-        <div class="img-wrap"><img src="images/kitchen/kitchen-1.png" alt="Kitchen" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/kitchen/kitchen-2.png" alt="Kitchen" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/kitchen/kitchen-1.png" alt="Kitchen" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/kitchen/kitchen-2.png" alt="Kitchen" loading="lazy" /></div>
       </div>
     </div>
 
@@ -1563,9 +1588,9 @@
         <span class="ro">Baie</span><span class="de">Badezimmer</span>
       </p>
       <div class="room-grid cols-3">
-        <div class="img-wrap"><img src="images/bathroom/bathroom-1.png" alt="Bathroom" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/bathroom/bathroom-2.png" alt="Bathroom detail" loading="lazy" /></div>
-        <div class="img-wrap"><img src="images/bathroom/bathroom-3.png" alt="Bathroom" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/bathroom/bathroom-1.png" alt="Bathroom" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/bathroom/bathroom-2.png" alt="Bathroom detail" loading="lazy" /></div>
+        <div class="img-wrap"><img data-apartment-image src="images/apartments/7/bathroom/bathroom-3.png" alt="Bathroom" loading="lazy" /></div>
       </div>
     </div>
   </section>
@@ -1578,10 +1603,10 @@
         <span class="ro">Dotări</span><span class="de">Ausstattung</span>
       </p>
       <h2 class="fade-in">
-        <span class="en">Everything<br/>you need</span>
-        <span class="hu">Minden,<br/>amire szükség van</span>
-        <span class="ro">Tot ce<br/>ai nevoie</span>
-        <span class="de">Alles, was<br/>Sie brauchen</span>
+        <span class="en">Comforts for<br/>longer stays</span>
+        <span class="hu">Kényelem<br/>hosszabb tartózkodáshoz</span>
+        <span class="ro">Confort pentru<br/>șederi mai lungi</span>
+        <span class="de">Komfort für<br/>längere Aufenthalte</span>
       </h2>
       <div class="features-grid fade-in">
 
@@ -1630,14 +1655,14 @@
         <div class="feature">
           <div class="feature-icon">04</div>
           <div class="feature-name">
-            <span class="en">Private Terrace</span><span class="hu">Saját terasz</span>
+            <span class="en">Outdoor Space</span><span class="hu">Külső tér</span>
             <span class="ro">Terasă privată</span><span class="de">Private Terrasse</span>
           </div>
           <div class="feature-desc">
-            <span class="en">12 m² outdoor space with table and chairs</span>
-            <span class="hu">12 m² külső tér asztallal és székekkel</span>
-            <span class="ro">Spațiu exterior de 12 m² cu masă și scaune</span>
-            <span class="de">12 m² Außenbereich mit Tisch und Stühlen</span>
+            <span class="en">Each apartment has a 12 m² terrace; Apartments 7 and 8 also share an 80 m² garden</span>
+            <span class="hu">Minden apartmanhoz 12 m² terasz tartozik; a 7-es és 8-as közös 80 m²-es kertet is használ</span>
+            <span class="ro">Fiecare apartament are terasă de 12 m²; apartamentele 7 și 8 folosesc și o grădină comună de 80 m²</span>
+            <span class="de">Jedes Apartment hat eine 12 m² Terrasse; Apartment 7 und 8 nutzen zusätzlich einen 80 m² Gemeinschaftsgarten</span>
           </div>
         </div>
 
@@ -1672,14 +1697,14 @@
         <div class="feature">
           <div class="feature-icon">07</div>
           <div class="feature-name">
-            <span class="en">Two TVs & Internet</span><span class="hu">Két TV és internet</span>
-            <span class="ro">Două TV-uri și internet</span><span class="de">Zwei TVs & Internet</span>
+            <span class="en">TVs & Internet</span><span class="hu">TV-k és internet</span>
+            <span class="ro">TV-uri și internet</span><span class="de">TVs & Internet</span>
           </div>
           <div class="feature-desc">
-            <span class="en">Reliable internet and screens in both living and sleeping areas</span>
-            <span class="hu">Megbízható internet, TV a nappali és az alvó részen is</span>
-            <span class="ro">Internet stabil și ecrane în zona de zi și de dormit</span>
-            <span class="de">Zuverlässiges Internet und Bildschirme im Wohn- und Schlafbereich</span>
+            <span class="en">Reliable Wi-Fi and multiple TVs; Apartments 7 and 8 include three TVs each</span>
+            <span class="hu">Megbízható Wi-Fi és több TV; a 7-es és 8-as apartmanban három TV található</span>
+            <span class="ro">Wi-Fi stabil și mai multe TV-uri; apartamentele 7 și 8 au câte trei TV-uri</span>
+            <span class="de">Zuverlässiges Wi-Fi und mehrere TVs; Apartment 7 und 8 haben jeweils drei TVs</span>
           </div>
         </div>
 
@@ -1690,10 +1715,10 @@
             <span class="ro">4 persoane</span><span class="de">4 Personen</span>
           </div>
           <div class="feature-desc">
-            <span class="en">A compact layout arranged comfortably for up to four guests</span>
-            <span class="hu">Kompakt elrendezés, kényelmesen berendezve legfeljebb négy főnek</span>
-            <span class="ro">Un plan compact, amenajat confortabil pentru până la patru persoane</span>
-            <span class="de">Kompakter Grundriss, bequem für bis zu vier Gäste eingerichtet</span>
+            <span class="en">One double bed plus a sofa bed in each apartment</span>
+            <span class="hu">Minden apartmanban franciaágy és kanapéágy található</span>
+            <span class="ro">Fiecare apartament are pat dublu și canapea extensibilă</span>
+            <span class="de">Jedes Apartment hat ein Doppelbett und ein Schlafsofa</span>
           </div>
         </div>
 
@@ -1701,51 +1726,50 @@
     </div>
   </section>
 
-  <!-- STAY NOTES -->
-  <section id="stay-notes">
-    <div class="stay-inner">
-      <div class="fade-in">
+  <!-- AVAILABILITY -->
+  <section id="availability">
+    <div class="availability-inner">
+      <div class="availability-text fade-in">
         <p class="section-label">
-          <span class="en">Small details</span><span class="hu">Apró részletek</span>
-          <span class="ro">Detalii mici</span><span class="de">Kleine Details</span>
+          <span class="en">Availability</span><span class="hu">Elérhetőség</span>
+          <span class="ro">Disponibilitate</span><span class="de">Verfügbarkeit</span>
         </p>
         <h2>
-          <span class="en">Made for<br/>unhurried days</span>
-          <span class="hu">Lassú<br/>napokra hangolva</span>
-          <span class="ro">Pentru zile<br/>fără grabă</span>
-          <span class="de">Für Tage<br/>ohne Eile</span>
+          <span class="en">See which dates are available</span>
+          <span class="hu">Nézd meg, mely napok szabadok</span>
+          <span class="ro">Vezi ce date sunt disponibile</span>
+          <span class="de">Sehen Sie, welche Daten frei sind</span>
         </h2>
         <div class="section-rule"></div>
+        <p class="en">Booked and on-hold periods are marked below. Swipe or use the arrows to browse upcoming months, or contact us for the most current availability.</p>
+        <p class="hu">A foglalt és függőben lévő időszakok lent láthatók. Lapozz vagy használd a nyilakat a következő hónapokhoz, vagy írj nekünk a legfrissebb elérhetőségért.</p>
+        <p class="ro">Perioadele ocupate și în așteptare sunt marcate mai jos. Glisează sau folosește săgețile pentru lunile următoare ori contactează-ne pentru disponibilitatea actuală.</p>
+        <p class="de">Gebuchte und angefragte Zeiträume sind unten markiert. Wischen Sie oder nutzen Sie die Pfeile für weitere Monate, oder schreiben Sie uns für die aktuellste Verfügbarkeit.</p>
+        <span class="availability-context" id="availability-context"></span>
       </div>
-      <div class="stay-list fade-in">
-        <div class="stay-item">
-          <strong><span class="en">Morning terrace</span><span class="hu">Reggeli terasz</span><span class="ro">Terasă de dimineață</span><span class="de">Morgenterrasse</span></strong>
-          <span class="en">A shaded outdoor room for coffee, reading, and late dinners.</span>
-          <span class="hu">Árnyékos külső szoba kávéhoz, olvasáshoz és hosszú vacsorákhoz.</span>
-          <span class="ro">O cameră exterioară umbrită pentru cafea, citit și cine târzii.</span>
-          <span class="de">Ein schattiger Außenraum für Kaffee, Lesen und lange Abendessen.</span>
+
+      <div class="fade-in">
+        <div class="availability-header">
+          <div class="availability-window" id="availability-window"></div>
         </div>
-        <div class="stay-item">
-          <strong><span class="en">Beach rhythm</span><span class="hu">Strandritmus</span><span class="ro">Ritm de plajă</span><span class="de">Strandrhythmus</span></strong>
-          <span class="en">The free beach is close enough for several swims in a single day.</span>
-          <span class="hu">A szabadstrand elég közel van ahhoz, hogy naponta többször is visszatérj.</span>
-          <span class="ro">Plaja liberă este suficient de aproape pentru mai multe băi într-o zi.</span>
-          <span class="de">Der Freistrand ist nah genug für mehrere Badegänge am Tag.</span>
+        <div class="availability-shell">
+          <button class="availability-nav prev" id="availability-prev" type="button" aria-label="Previous month">‹</button>
+          <div class="availability-board" id="availability-board"></div>
+          <button class="availability-nav next" id="availability-next" type="button" aria-label="Next month">›</button>
         </div>
-        <div class="stay-item">
-          <strong><span class="en">Quiet footprint</span><span class="hu">Csendes méret</span><span class="ro">Amprentă liniștită</span><span class="de">Ruhige Größe</span></strong>
-          <span class="en">31 m² planned simply, with storage, climate control, and room for four.</span>
-          <span class="hu">31 m² egyszerűen megtervezve, tárolással, fancoillal és négy főnek elegendő hellyel.</span>
-          <span class="ro">31 m² gândiți simplu, cu depozitare, climatizare și spațiu pentru patru.</span>
-          <span class="de">31 m² klar geplant, mit Stauraum, Klimatisierung und Platz für vier.</span>
+        <div class="availability-legend">
+          <span class="legend-mark free"><span class="en">Available</span><span class="hu">Szabad</span><span class="ro">Disponibil</span><span class="de">Frei</span></span>
+          <span class="legend-mark"><span class="en">Booked</span><span class="hu">Foglalt</span><span class="ro">Ocupat</span><span class="de">Gebucht</span></span>
+          <span class="legend-mark reserved"><span class="en">On hold</span><span class="hu">Függőben</span><span class="ro">În așteptare</span><span class="de">Angefragt</span></span>
+          <span><span class="en">Other dates by enquiry</span><span class="hu">Más dátumokról érdeklődj</span><span class="ro">Alte date la cerere</span><span class="de">Weitere Termine auf Anfrage</span></span>
         </div>
-        <div class="stay-item">
-          <strong><span class="en">Village access</span><span class="hu">Faluközeli hely</span><span class="ro">Aproape de sat</span><span class="de">Nah am Dorf</span></strong>
-          <span class="en">Good restaurants, trains, the marina, and old trees sit within an easy walk.</span>
-          <span class="hu">Jó éttermek, vonat, marina és öreg fák mind kényelmes sétára vannak.</span>
-          <span class="ro">Restaurante bune, trenul, marina și copacii bătrâni sunt la o plimbare ușoară.</span>
-          <span class="de">Gute Restaurants, Bahn, Marina und alte Bäume liegen in bequemer Gehweite.</span>
-        </div>
+        <p class="availability-note">
+          <span class="en">This calendar is informational only and does not confirm a reservation.</span>
+          <span class="hu">A naptár tájékoztató jellegű, nem jelent végleges foglalást.</span>
+          <span class="ro">Calendarul este informativ și nu confirmă o rezervare.</span>
+          <span class="de">Dieser Kalender ist nur informativ und bestätigt keine Reservierung.</span>
+        </p>
+        <p class="availability-status" id="availability-status" aria-live="polite"></p>
       </div>
     </div>
   </section>
@@ -1801,53 +1825,6 @@
     </div>
   </section>
 
-  <!-- AVAILABILITY -->
-  <section id="availability">
-    <div class="availability-inner">
-      <div class="availability-text fade-in">
-        <p class="section-label">
-          <span class="en">Availability</span><span class="hu">Elérhetőség</span>
-          <span class="ro">Disponibilitate</span><span class="de">Verfügbarkeit</span>
-        </p>
-        <h2>
-          <span class="en">See which dates are available</span>
-          <span class="hu">Nézd meg, mely napok szabadok</span>
-          <span class="ro">Vezi ce date sunt disponibile</span>
-          <span class="de">Sehen Sie, welche Daten frei sind</span>
-        </h2>
-        <div class="section-rule"></div>
-        <p class="en">Booked and on-hold periods are marked below. Swipe or use the arrows to browse upcoming months, or contact us for the most current availability.</p>
-        <p class="hu">A foglalt és függőben lévő időszakok lent láthatók. Lapozz vagy használd a nyilakat a következő hónapokhoz, vagy írj nekünk a legfrissebb elérhetőségért.</p>
-        <p class="ro">Perioadele ocupate și în așteptare sunt marcate mai jos. Glisează sau folosește săgețile pentru lunile următoare ori contactează-ne pentru disponibilitatea actuală.</p>
-        <p class="de">Gebuchte und angefragte Zeiträume sind unten markiert. Wischen Sie oder nutzen Sie die Pfeile für weitere Monate, oder schreiben Sie uns für die aktuellste Verfügbarkeit.</p>
-      </div>
-
-      <div class="fade-in">
-        <div class="availability-header">
-          <div class="availability-window" id="availability-window"></div>
-        </div>
-        <div class="availability-shell">
-          <button class="availability-nav prev" id="availability-prev" type="button" aria-label="Previous month">‹</button>
-          <div class="availability-board" id="availability-board"></div>
-          <button class="availability-nav next" id="availability-next" type="button" aria-label="Next month">›</button>
-        </div>
-        <div class="availability-legend">
-          <span class="legend-mark free"><span class="en">Available</span><span class="hu">Szabad</span><span class="ro">Disponibil</span><span class="de">Frei</span></span>
-          <span class="legend-mark"><span class="en">Booked</span><span class="hu">Foglalt</span><span class="ro">Ocupat</span><span class="de">Gebucht</span></span>
-          <span class="legend-mark reserved"><span class="en">On hold</span><span class="hu">Függőben</span><span class="ro">În așteptare</span><span class="de">Angefragt</span></span>
-          <span><span class="en">Other dates by enquiry</span><span class="hu">Más dátumokról érdeklődj</span><span class="ro">Alte date la cerere</span><span class="de">Weitere Termine auf Anfrage</span></span>
-        </div>
-        <p class="availability-note">
-          <span class="en">This calendar is informational only and does not confirm a reservation.</span>
-          <span class="hu">A naptár tájékoztató jellegű, nem jelent végleges foglalást.</span>
-          <span class="ro">Calendarul este informativ și nu confirmă o rezervare.</span>
-          <span class="de">Dieser Kalender ist nur informativ und bestätigt keine Reservierung.</span>
-        </p>
-        <p class="availability-status" id="availability-status" aria-live="polite"></p>
-      </div>
-    </div>
-  </section>
-
   <!-- CONTACT -->
   <section id="contact">
     <p class="section-label">
@@ -1888,7 +1865,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">HÁT · Balatonszemes</div>
+    <div class="footer-logo">Szemespart Apartments · Balatonszemes</div>
     <div class="footer-copy">© <span id="footer-year"></span></div>
   </footer>
 
@@ -1910,7 +1887,7 @@
       ['hu','en','de','ro'].forEach(l => {
         document.getElementById('btn-' + l).classList.toggle('active', l === lang);
       });
-      localStorage.setItem('hat-lang', lang);
+      localStorage.setItem('szemespart-lang', lang);
     }
 
     // ── Mobile menu ──
@@ -1923,13 +1900,13 @@
     function toggleTheme() {
       const isDark = document.body.classList.toggle('dark');
       document.getElementById('theme-btn').textContent = isDark ? '☀' : '☾';
-      localStorage.setItem('hat-theme', isDark ? 'dark' : 'light');
+      localStorage.setItem('szemespart-theme', isDark ? 'dark' : 'light');
     }
 
     // ── Restore preferences ──
     (function init() {
-      const lang = localStorage.getItem('hat-lang') || 'hu';
-      const theme = localStorage.getItem('hat-theme') || 'light';
+      const lang = localStorage.getItem('szemespart-lang') || localStorage.getItem('hat-lang') || 'hu';
+      const theme = localStorage.getItem('szemespart-theme') || localStorage.getItem('hat-theme') || 'light';
       setLang(lang);
       if (theme === 'dark') {
         document.body.classList.add('dark');
@@ -1940,14 +1917,23 @@
     // ── Scrolled nav ──
     const navbar = document.getElementById('navbar');
     const toTop = document.getElementById('to-top');
+    document.getElementById('shoreline')?.after(document.getElementById('nearby'));
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 60);
       toTop.classList.toggle('visible', window.scrollY > 700);
+      updateNavApartmentSwitcher();
       if (navbar.classList.contains('menu-open')) {
         navbar.classList.remove('menu-open');
         document.getElementById('menu-btn').setAttribute('aria-expanded', 'false');
       }
     }, { passive: true });
+
+    function updateNavApartmentSwitcher() {
+      const picker = document.getElementById('apartments');
+      if (!picker) return;
+      const rect = picker.getBoundingClientRect();
+      navbar.classList.toggle('apartment-switcher-visible', rect.bottom < 86);
+    }
 
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1994,6 +1980,62 @@
     let availabilityWindow = defaultAvailabilityWindow();
     let availabilityMonths = [];
     let availabilityScrollTimer;
+    let activeApartment = '7';
+    const apartmentLabels = {
+      '7': { en: 'Apartment 7', hu: '7-es apartman', ro: 'Apartamentul 7', de: 'Apartment 7' },
+      '8': { en: 'Apartment 8', hu: '8-as apartman', ro: 'Apartamentul 8', de: 'Apartment 8' },
+      '34': { en: 'Apartment 34', hu: '34-es apartman', ro: 'Apartamentul 34', de: 'Apartment 34' }
+    };
+
+    function selectApartment(apartment, options = {}) {
+      if (!apartmentLabels[apartment]) return;
+      activeApartment = apartment;
+
+      document.querySelectorAll('.apartment-card').forEach(card => {
+        card.classList.toggle('active', card.dataset.apartment === apartment);
+      });
+      document.querySelectorAll('.nav-apartment-btn').forEach(button => {
+        button.classList.toggle('active', button.dataset.apartment === apartment);
+      });
+
+      updateGalleryApartment(apartment);
+      updateAvailabilityApartment(apartment);
+      loadAvailability();
+
+      if (options.scrollToGallery) {
+        document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function updateGalleryApartment(apartment) {
+      const context = document.getElementById('gallery-context');
+      const label = apartmentLabels[apartment];
+      if (context && label) {
+        context.innerHTML = localizedSpans({
+          en: `Currently showing ${label.en}`,
+          hu: `Jelenleg: ${label.hu}`,
+          ro: `Se afișează: ${label.ro}`,
+          de: `Aktuell: ${label.de}`
+        });
+      }
+
+      document.querySelectorAll('[data-apartment-image]').forEach(image => {
+        image.src = image.src.replace(/images\/apartments\/(?:7|8|34)\//, `images/apartments/${apartment}/`);
+      });
+    }
+
+    function updateAvailabilityApartment(apartment) {
+      const context = document.getElementById('availability-context');
+      const label = apartmentLabels[apartment];
+      if (!context || !label) return;
+
+      context.innerHTML = localizedSpans({
+        en: `Availability for ${label.en}`,
+        hu: `${label.hu} elérhetősége`,
+        ro: `Disponibilitate pentru ${label.ro}`,
+        de: `Verfügbarkeit für ${label.de}`
+      });
+    }
 
     function renderAvailabilityCalendar(events) {
       const board = document.getElementById('availability-board');
@@ -2195,7 +2237,7 @@
       });
 
       try {
-        const response = await fetch('/.netlify/functions/availability', { cache: 'no-store' });
+        const response = await fetch(`/.netlify/functions/availability?apartment=${encodeURIComponent(activeApartment)}`, { cache: 'no-store' });
         if (!response.ok) throw new Error('Availability feed unavailable');
 
         const data = await response.json();
@@ -2231,12 +2273,27 @@
 
     document.getElementById('availability-prev')?.addEventListener('click', () => scrollAvailabilityBy(-1));
     document.getElementById('availability-next')?.addEventListener('click', () => scrollAvailabilityBy(1));
+    document.querySelectorAll('.nav-apartment-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        selectApartment(button.dataset.apartment || '7');
+      });
+    });
+    document.querySelectorAll('.apartment-card').forEach(card => {
+      card.addEventListener('click', () => selectApartment(card.dataset.apartment || '7', { scrollToGallery: true }));
+      card.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          selectApartment(card.dataset.apartment || '7', { scrollToGallery: true });
+        }
+      });
+    });
     document.getElementById('availability-board')?.addEventListener('scroll', () => {
       window.clearTimeout(availabilityScrollTimer);
       availabilityScrollTimer = window.setTimeout(updateAvailabilityWindow, 60);
     }, { passive: true });
 
-    loadAvailability();
+    selectApartment(activeApartment);
+    updateNavApartmentSwitcher();
 
     // ── Lightbox ──
     let allImages = [], lbIndex = 0;
