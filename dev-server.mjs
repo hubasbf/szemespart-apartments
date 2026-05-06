@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { createReadStream, existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { onRequestGet as cloudflareAvailabilityHandler } from './functions/api/availability.js';
 import { handler as availabilityHandler } from './netlify/functions/availability.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -28,6 +29,16 @@ const mimeTypes = {
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);
+
+    if (url.pathname === '/api/availability') {
+      const result = await cloudflareAvailabilityHandler({
+        request: new Request(`http://${req.headers.host || 'localhost'}${req.url || '/'}`, { method: req.method }),
+        env: process.env
+      });
+      res.writeHead(result.status, Object.fromEntries(result.headers));
+      res.end(await result.text());
+      return;
+    }
 
     if (url.pathname === '/.netlify/functions/availability') {
       const result = await availabilityHandler({ httpMethod: req.method, queryStringParameters: Object.fromEntries(url.searchParams) });

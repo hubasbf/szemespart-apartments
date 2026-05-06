@@ -2409,7 +2409,7 @@
       });
 
       try {
-        const response = await fetch(`/.netlify/functions/availability?apartment=${encodeURIComponent(activeApartment)}`, { cache: 'no-store' });
+        const response = await fetch(`/api/availability?apartment=${encodeURIComponent(activeApartment)}`, { cache: 'no-store' });
         if (!response.ok) throw new Error('Availability feed unavailable');
 
         const data = await response.json();

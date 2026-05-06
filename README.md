@@ -4,7 +4,7 @@ Static multilingual apartment collection site for Apartments 7, 8, and 34 in Sze
 
 ## Availability calendars
 
-Netlify reads Google Calendar ICS URLs from environment variables.
+Cloudflare Pages Functions and the local preview server read Google Calendar ICS URLs from environment variables.
 
 Current fallback:
 
@@ -21,3 +21,9 @@ APARTMENT_34_ICS_URL
 ```
 
 If an apartment-specific variable is missing, the function falls back to `GOOGLE_CALENDAR_ICS_URL`.
+
+The production site calls:
+
+```text
+/api/availability?apartment=34
+```
