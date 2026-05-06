@@ -146,9 +146,9 @@
       z-index: 88;
       top: 78px;
       left: 50%;
-      width: min(calc(100% - 96px), 980px);
+      width: min(calc(100% - 96px), 1120px);
       display: grid;
-      grid-template-columns: minmax(180px, 1fr) auto;
+      grid-template-columns: minmax(180px, 1fr) auto auto;
       align-items: stretch;
       border: 1px solid var(--border);
       background: rgba(250,250,248,0.92);
@@ -195,6 +195,25 @@
       align-items: stretch;
       padding: 5px;
       gap: 5px;
+    }
+    .apartment-view-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      border-left: 1px solid var(--border);
+      color: var(--teal);
+      font-family: var(--sans);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.25s, color 0.25s;
+    }
+    .apartment-view-cta:hover {
+      background: var(--teal);
+      color: var(--bg-card);
     }
     .nav-apartment-btn {
       appearance: none;
@@ -1372,6 +1391,11 @@
       .apartment-view-name { font-size: 18px; }
       .apartment-view-options { display: grid; grid-template-columns: repeat(3, 1fr); }
       .nav-apartment-btn { padding: 10px 6px; font-size: 10px; }
+      .apartment-view-cta {
+        min-height: 42px;
+        border-left: none;
+        border-top: 1px solid var(--border);
+      }
       section { padding: 72px 24px; }
       #intro { padding: 72px 24px 32px; }
       .intro-inner { grid-template-columns: 1fr; gap: 28px; }
@@ -1487,6 +1511,12 @@
       <button class="nav-apartment-btn" type="button" data-apartment="8"><span class="en">Apartment 8</span><span class="hu">8-as apartman</span><span class="ro">Ap. 8</span><span class="de">Apartment 8</span></button>
       <button class="nav-apartment-btn" type="button" data-apartment="34"><span class="en">Apartment 34</span><span class="hu">34-es apartman</span><span class="ro">Ap. 34</span><span class="de">Apartment 34</span></button>
     </div>
+    <a href="#availability" class="apartment-view-cta">
+      <span class="en">See availability</span>
+      <span class="hu">Elérhetőség</span>
+      <span class="ro">Vezi disponibilitatea</span>
+      <span class="de">Verfügbarkeit</span>
+    </a>
   </div>
 
   <!-- HERO -->
@@ -2460,11 +2490,11 @@
       });
     });
     document.querySelectorAll('.apartment-card').forEach(card => {
-      card.addEventListener('click', () => selectApartment(card.dataset.apartment || '7', { scrollToGallery: true }));
+      card.addEventListener('click', () => selectApartment(card.dataset.apartment || '7'));
       card.addEventListener('keydown', event => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
-          selectApartment(card.dataset.apartment || '7', { scrollToGallery: true });
+          selectApartment(card.dataset.apartment || '7');
         }
       });
     });
@@ -2481,6 +2511,7 @@
     document.addEventListener('click', event => {
       const wrap = event.target.closest('.img-wrap');
       if (!wrap) return;
+      if (wrap.closest('.apartment-card')) return;
       const image = wrap.querySelector('img');
       if (!image) return;
 
