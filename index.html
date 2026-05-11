@@ -1275,9 +1275,43 @@
     #lightbox.open { display: flex; }
     #lightbox img {
       max-width: 88vw;
-      max-height: 88vh;
+      max-height: 82vh;
       object-fit: contain;
       user-select: none;
+    }
+    .lb-room-switcher {
+      position: absolute;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      max-width: min(820px, calc(100vw - 40px));
+      padding: 8px;
+      background: rgba(16,18,18,0.58);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(14px);
+    }
+    .lb-room-tab {
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      color: rgba(255,255,255,0.62);
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 8px 10px;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .lb-room-tab:hover,
+    .lb-room-tab.active {
+      border-color: rgba(255,255,255,0.32);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
     }
     .lb-close {
       position: absolute;
@@ -1471,6 +1505,15 @@
       .room-grid.gallery-compact { grid-template-columns: 1fr; }
       .room-grid.gallery-compact .img-wrap { height: 220px; }
       .room-grid.cols-2 .img-wrap { height: 240px; }
+      .lb-room-switcher {
+        bottom: 14px;
+        width: calc(100vw - 28px);
+      }
+      .lb-room-tab {
+        flex: 1 1 calc(50% - 4px);
+        padding: 9px 6px;
+        font-size: 9px;
+      }
       .lang-btn { padding: 2px 3px; font-size: 10px; }
       .nav-controls { gap: 10px; }
       #contact { padding: 60px 22px; }
@@ -1727,6 +1770,12 @@
       </button>
       <button class="gallery-tab" type="button" data-gallery="terrace">
         <span class="en">Terrace</span><span class="hu">Terasz</span><span class="ro">Terasă</span><span class="de">Terrasse</span>
+      </button>
+      <button class="gallery-tab" type="button" data-gallery="garden" hidden>
+        <span class="en">Garden</span><span class="hu">Kert</span><span class="ro">Grădină</span><span class="de">Garten</span>
+      </button>
+      <button class="gallery-tab" type="button" data-gallery="outside" hidden>
+        <span class="en">Outside</span><span class="hu">Kívül</span><span class="ro">Exterior</span><span class="de">Außen</span>
       </button>
     </div>
 
@@ -2050,6 +2099,7 @@
     <button class="lb-prev" onclick="lbMove(-1)">&#8249;</button>
     <img id="lb-img" src="" alt="" />
     <button class="lb-next" onclick="lbMove(1)">&#8250;</button>
+    <div class="lb-room-switcher" id="lb-room-switcher" aria-label="Gallery rooms"></div>
   </div>
 
   <button class="to-top" id="to-top" onclick="scrollToTop()" aria-label="Back to top">↑</button>
@@ -2166,28 +2216,68 @@
     const gallerySets = {
       living: {
         folder: 'living',
-        label: { en: 'Living Room & Dining', hu: 'Nappali & étkező', ro: 'Living & sufragerie', de: 'Wohn- & Esszimmer' },
-        files: ['living-1.png', 'living-2.png', 'living-4.png', 'living-5.png', 'living-6.png']
+        label: { en: 'Living', hu: 'Nappali', ro: 'Living', de: 'Wohnen' },
+        files: ['living-1.png', 'living-2.png', 'living-4.png', 'living-5.png', 'living-6.png'],
+        apartmentFiles: {
+          '7': ['living-1.png', 'living-2.png', 'living-3.png'],
+          '8': ['living-1.png', 'living-2.png', 'living-3.png', 'living-4.png']
+        }
       },
       bedroom: {
         folder: 'bedroom',
         label: { en: 'Bedroom', hu: 'Hálószoba', ro: 'Dormitor', de: 'Schlafzimmer' },
-        files: ['bedroom-1.png', 'bedroom-2.png', 'bedroom-3.png', 'bedroom-4.png']
+        files: ['bedroom-1.png', 'bedroom-2.png', 'bedroom-3.png', 'bedroom-4.png'],
+        apartmentFiles: {
+          '7': ['bedroom-1.png', 'bedroom-2.png', 'bedroom-3.png'],
+          '8': ['bedroom-1.png', 'bedroom-2.png', 'bedroom-3.png']
+        }
       },
       kitchen: {
         folder: 'kitchen',
         label: { en: 'Kitchen', hu: 'Konyha', ro: 'Bucătărie', de: 'Küche' },
-        files: ['kitchen-1.png', 'kitchen-2.png']
+        files: ['kitchen-1.png', 'kitchen-2.png'],
+        apartmentFiles: {
+          '7': ['kitchen-1.png', 'kitchen-2.png', 'kitchen-3.png'],
+          '8': ['kitchen-1.png', 'kitchen-2.png', 'kitchen-3.png', 'kitchen-4.png']
+        }
       },
       bathroom: {
         folder: 'bathroom',
         label: { en: 'Bathroom', hu: 'Fürdőszoba', ro: 'Baie', de: 'Badezimmer' },
-        files: ['bathroom-1.png', 'bathroom-2.png', 'bathroom-3.png']
+        files: ['bathroom-1.png', 'bathroom-2.png', 'bathroom-3.png'],
+        apartmentFiles: {
+          '7': ['bathroom-1.png', 'bathroom-2.png'],
+          '8': ['bathroom-1.png', 'bathroom-2.png', 'bathroom-3.png']
+        }
       },
       terrace: {
         folder: 'terrace',
         label: { en: 'Terrace', hu: 'Terasz', ro: 'Terasă', de: 'Terrasse' },
-        files: ['terrace-1.png', 'terrace-2.png', 'terrace-3.png', 'terrace-4.png']
+        files: ['terrace-1.png', 'terrace-2.png', 'terrace-3.png', 'terrace-4.png'],
+        apartmentFiles: {
+          '7': ['terrace-1.png', 'terrace-2.png'],
+          '8': ['terrace-1.png', 'terrace-2.png', 'terrace-3.png', 'terrace-4.png']
+        }
+      },
+      garden: {
+        folder: 'garden',
+        label: { en: 'Garden', hu: 'Kert', ro: 'Grădină', de: 'Garten' },
+        files: [],
+        apartments: ['7', '8'],
+        apartmentFiles: {
+          '7': ['garden-1.png', 'garden-2.png', 'garden-3.png'],
+          '8': ['garden-1.png', 'garden-2.png', 'garden-3.png']
+        }
+      },
+      outside: {
+        folder: 'outside',
+        label: { en: 'Outside', hu: 'Kívül', ro: 'Exterior', de: 'Außen' },
+        files: [],
+        apartments: ['7', '8'],
+        apartmentFiles: {
+          '7': ['outside-1.png', 'outside-2.png', 'outside-3.png'],
+          '8': ['outside-1.png', 'outside-2.png', 'outside-3.png']
+        }
       }
     };
 
@@ -2204,6 +2294,7 @@
       const viewName = document.getElementById('apartment-view-name');
       if (viewName) viewName.innerHTML = localizedSpans(apartmentLabels[apartment]);
 
+      updateGalleryTabs(apartment);
       updateGalleryApartment(apartment);
       updateAvailabilityApartment(apartment);
       loadAvailability();
@@ -2216,7 +2307,7 @@
     function updateGalleryApartment(apartment) {
       const context = document.getElementById('gallery-context');
       const label = apartmentLabels[apartment];
-      const hasFinalPhotos = apartment === '34';
+      const hasFinalPhotos = true;
       if (context && label) {
         context.innerHTML = hasFinalPhotos
           ? localizedSpans({
@@ -2236,22 +2327,50 @@
       renderApartmentGallery();
     }
 
+    function updateGalleryTabs(apartment) {
+      if (!galleryIsAvailableForApartment(activeGallery, apartment)) {
+        activeGallery = 'living';
+      }
+
+      document.querySelectorAll('.gallery-tab').forEach(tab => {
+        const key = tab.dataset.gallery || 'living';
+        const available = galleryIsAvailableForApartment(key, apartment);
+        tab.hidden = !available;
+        tab.classList.toggle('active', available && key === activeGallery);
+      });
+    }
+
+    function galleryIsAvailableForApartment(key, apartment) {
+      const set = gallerySets[key];
+      return Boolean(set && (!set.apartments || set.apartments.includes(apartment)));
+    }
+
+    function getGalleryFiles(key, apartment) {
+      const set = gallerySets[key] || gallerySets.living;
+      return (set.apartmentFiles && set.apartmentFiles[apartment]) || set.files;
+    }
+
+    function getLightboxImages(key = activeGallery) {
+      const set = gallerySets[key] || gallerySets.living;
+      const files = getGalleryFiles(key, activeApartment);
+      return files.map((file, index) => ({
+        src: `images/apartments/${activeApartment}/${set.folder}/${file}`,
+        alt: `${set.label.en} ${index + 1} - ${apartmentLabels[activeApartment].en}`
+      }));
+    }
+
     function renderApartmentGallery() {
       const grid = document.getElementById('gallery-grid');
       const title = document.getElementById('gallery-room-title');
       const set = gallerySets[activeGallery] || gallerySets.living;
       if (!grid || !title || !set) return;
 
+      const files = getGalleryFiles(activeGallery, activeApartment);
       title.innerHTML = localizedSpans(set.label);
-      grid.innerHTML = set.files.map((file, index) => {
+      grid.innerHTML = files.map((file, index) => {
         const src = `images/apartments/${activeApartment}/${set.folder}/${file}`;
         const alt = `${set.label.en} ${index + 1} - ${apartmentLabels[activeApartment].en}`;
-        const badge = activeApartment === '34' ? '' : `<span class="sample-photo-badge">${localizedSpans({
-          en: `Sample photo · ${apartmentLabels[activeApartment].en}`,
-          hu: `Mintafotó · ${apartmentLabels[activeApartment].hu}`,
-          ro: `Fotografie exemplu · ${apartmentLabels[activeApartment].ro}`,
-          de: `Beispielfoto · ${apartmentLabels[activeApartment].de}`
-        })}</span>`;
+        const badge = '';
         return `<div class="img-wrap"><img src="${src}" alt="${alt}" loading="lazy" />${badge}</div>`;
       }).join('');
     }
@@ -2545,21 +2664,60 @@
       const image = wrap.querySelector('img');
       if (!image) return;
 
-      allImages = Array.from(document.querySelectorAll('.img-wrap img'));
-      lbIndex = allImages.indexOf(image);
-      document.getElementById('lb-img').src = allImages[lbIndex].src;
+      openLightboxForImage(image);
+    });
+    function openLightboxForImage(image) {
+      allImages = getLightboxImages(activeGallery);
+      const clickedSrc = image.getAttribute('src') || '';
+      lbIndex = Math.max(0, allImages.findIndex(item => clickedSrc.endsWith(item.src)));
+      renderLightboxRoomSwitcher();
+      showLightboxImage();
       document.getElementById('lightbox').classList.add('open');
       document.body.style.overflow = 'hidden';
-    });
+    }
     function closeLightbox() {
       document.getElementById('lightbox').classList.remove('open');
       document.body.style.overflow = '';
     }
     function lbMove(dir) {
+      if (!allImages.length) return;
       lbIndex = (lbIndex + dir + allImages.length) % allImages.length;
-      document.getElementById('lb-img').src = allImages[lbIndex].src;
+      showLightboxImage();
     }
-    document.getElementById('lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) closeLightbox(); });
+    function showLightboxImage() {
+      const image = allImages[lbIndex];
+      const lbImg = document.getElementById('lb-img');
+      if (!image || !lbImg) return;
+      lbImg.src = image.src;
+      lbImg.alt = image.alt;
+    }
+    function renderLightboxRoomSwitcher() {
+      const switcher = document.getElementById('lb-room-switcher');
+      if (!switcher) return;
+
+      switcher.innerHTML = Object.entries(gallerySets)
+        .filter(([key]) => galleryIsAvailableForApartment(key, activeApartment))
+        .map(([key, set]) => `<button class="lb-room-tab${key === activeGallery ? ' active' : ''}" type="button" data-gallery="${key}">${localizedSpans(set.label)}</button>`)
+        .join('');
+    }
+    function lbSwitchRoom(key) {
+      if (!galleryIsAvailableForApartment(key, activeApartment)) return;
+      activeGallery = key;
+      updateGalleryTabs(activeApartment);
+      renderApartmentGallery();
+      allImages = getLightboxImages(activeGallery);
+      lbIndex = 0;
+      renderLightboxRoomSwitcher();
+      showLightboxImage();
+    }
+    document.getElementById('lightbox').addEventListener('click', e => {
+      const roomTab = e.target.closest('.lb-room-tab');
+      if (roomTab) {
+        lbSwitchRoom(roomTab.dataset.gallery || 'living');
+        return;
+      }
+      if (e.target === e.currentTarget) closeLightbox();
+    });
     document.addEventListener('keydown', e => {
       if (!document.getElementById('lightbox').classList.contains('open')) return;
       if (e.key === 'Escape') closeLightbox();
